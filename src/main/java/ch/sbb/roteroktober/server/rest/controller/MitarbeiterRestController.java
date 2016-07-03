@@ -32,8 +32,7 @@ public class MitarbeiterRestController {
         Iterable<MitarbeiterEntity> entities = mitarbeiterRepository.findAll();
 
         // Ressourcen erstellen
-        List<MitarbeiterResource> result = StreamSupport.stream(entities.spliterator(), false).map(mitarbeiterMapper::fromEntity).collect(Collectors.toList());
-        return result;
+        return StreamSupport.stream(entities.spliterator(), false).map(mitarbeiterMapper::fromEntity).collect(Collectors.toList());
     }
 
     @RequestMapping(path = "/{uid}", method = RequestMethod.GET)
@@ -45,8 +44,7 @@ public class MitarbeiterRestController {
         if (mitarbeiter == null) {
             throw new NotFoundException("Kein Benutzer mit der UID " + uid + " gefunden");
         } else {
-            MitarbeiterResource result = mitarbeiterMapper.fromEntity(mitarbeiter);
-            return result;
+            return mitarbeiterMapper.fromEntity(mitarbeiter);
         }
     }
 
@@ -59,7 +57,6 @@ public class MitarbeiterRestController {
         MitarbeiterEntity savedEntity = mitarbeiterRepository.save(entity);
 
         // Zurückmappen und zurückgeben
-        MitarbeiterResource result = mitarbeiterMapper.fromEntity(savedEntity);
-        return result;
+        return mitarbeiterMapper.fromEntity(savedEntity);
     }
 }
