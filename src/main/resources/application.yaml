@@ -14,6 +14,11 @@ spring:
   application:
     name: RoterOktoberServer
 
+
 liquibase:
   change-log: classpath:/db/changelog/changelog.xml
   default-schema: roteroktober
+logging:
+  level:
+    org:
+      hibernate: info
