@@ -63,7 +63,7 @@ public class PublicIdService {
      * @param key Eindeutiger Schlüssel
      * @return Erstellte Entität. <code>null</code>, wenn der Schlüssel in der Datenbank bereits existiert.
      */
-    protected PublicIdEntity createNewPublicId(String key) {
+    PublicIdEntity createNewPublicId(String key) {
         // Entität erstellen
         PublicIdEntity entity = new PublicIdEntity();
         entity.setPublicId(key);

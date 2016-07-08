@@ -5,11 +5,9 @@ import ch.sbb.roteroktober.server.repo.ProjektRepository;
 import ch.sbb.roteroktober.server.rest.exceptions.NotFoundException;
 import ch.sbb.roteroktober.server.rest.mapper.ProjektMapper;
 import ch.sbb.roteroktober.server.rest.model.ProjektResource;
+import ch.sbb.roteroktober.server.service.ProjektService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +25,9 @@ public class ProjektRestController {
 
     @Autowired
     private ProjektMapper projektMapper;
+
+    @Autowired
+    private ProjektService projektService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<ProjektResource> getAll() {
@@ -48,5 +49,17 @@ public class ProjektRestController {
         } else {
             return projektMapper.fromEntity(projekt);
         }
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ProjektResource create(@RequestBody ProjektResource resource) {
+        // Entität erstellen
+        ProjektEntity entity = projektMapper.toEntity(resource);
+
+        // Speichern
+        ProjektEntity savedEntity = projektService.createProjekt(entity);
+
+        // Ressource erstellen und zurückgeben
+        return projektMapper.fromEntity(savedEntity);
     }
 }
