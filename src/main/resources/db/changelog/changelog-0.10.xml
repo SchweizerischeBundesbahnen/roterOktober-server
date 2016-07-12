@@ -58,4 +58,38 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet id="4" author="surech">
+        <createTable tableName="einsatz">
+            <column name="ID" type="BIGINT" autoIncrement="true" remarks="Technischer Primärschlüssel">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="PUBLIC_ID" type="varchar(50)" remarks="Öffentlicher Schlüssel">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="MITARBEITER_FK" type="BIGINT" remarks="Femdschlüsel auf den Mitarbeiter">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="PROJEKT_FK" type="BIGINT" remarks="Fremdschlüssel auf das Projekt">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="ROLLE" type="varchar(100)" remarks="Rolle des Mitarbeiters in diesem Einsatz">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="SENIORITAET" type="varchar(100)" remarks="Seniorität des Mitarbeiter in diesem Einsatz">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="createdAt" type="DATETIME">
+                <constraints nullable="false" unique="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="einsatz" baseColumnNames="MITARBEITER_FK"
+                                 constraintName="EINSATZ_MITARBEITER_FK"
+                                 referencedTableName="mitarbeiter"
+                                 referencedColumnNames="ID"/>
+        <addForeignKeyConstraint baseTableName="einsatz" baseColumnNames="PROJEKT_FK"
+                                 constraintName="EINSATZ_PROJEKT_FK"
+                                 referencedTableName="projekt"
+                                 referencedColumnNames="ID"/>
+    </changeSet>
 </databaseChangeLog>
