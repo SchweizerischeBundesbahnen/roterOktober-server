@@ -92,4 +92,29 @@
                                  referencedTableName="projekt"
                                  referencedColumnNames="ID"/>
     </changeSet>
+    <changeSet id="5" author="surech">
+        <createTable tableName="pensum">
+            <column name="ID" type="BIGINT" autoIncrement="true" remarks="Technischer Primärschlüssel">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="PUBLIC_ID" type="varchar(50)" remarks="Öffentlicher Schlüssel">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="EINSATZ_FK" type="BIGINT" remarks="Femdschlüsel auf den Einsatz">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="pensum" type="INT" remarks="Pensum als ganzzahliger Prozentwert zwischen 0 und 100">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="anfang" type="DATETIME" remarks="Beginn des Einsatzes">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="ende" type="DATETIME" remarks="Ende des Einsatzes. Kann auch leer sein, wenn er Einsatz unbefristet ist.">
+                <constraints nullable="true" unique="false"/>
+            </column>
+            <column name="createdAt" type="DATETIME">
+                <constraints nullable="false" unique="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>

@@ -1,8 +1,10 @@
 package ch.sbb.roteroktober.server.rest.mapper;
 
 import ch.sbb.roteroktober.server.model.EinsatzEntity;
+import ch.sbb.roteroktober.server.repo.PensumRepository;
 import ch.sbb.roteroktober.server.rest.controller.EinsatzRestController;
 import ch.sbb.roteroktober.server.rest.controller.MitarbeiterRestController;
+import ch.sbb.roteroktober.server.rest.controller.PensumRestController;
 import ch.sbb.roteroktober.server.rest.controller.ProjektRestController;
 import ch.sbb.roteroktober.server.rest.model.EinsatzResource;
 import org.springframework.stereotype.Component;
@@ -25,6 +27,7 @@ public class EinsatzMapper {
         result.add(linkTo(methodOn(EinsatzRestController.class).findById(entity.getPublicId())).withSelfRel());
         result.add(linkTo(methodOn(ProjektRestController.class).getByPublicId(entity.getProjekt().getPublicId())).withRel("projekt"));
         result.add(linkTo(methodOn(MitarbeiterRestController.class).getByUid(entity.getMitarbeiter().getUid())).withRel("mitarbeiter"));
+        result.add(linkTo(methodOn(PensumRestController.class).findAllByMitarbeiterAndEinsatz(entity.getMitarbeiter().getUid(), entity.getPublicId())).withRel("pensen"));
 
         return result;
     }
