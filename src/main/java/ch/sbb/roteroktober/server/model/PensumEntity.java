@@ -2,6 +2,8 @@ package ch.sbb.roteroktober.server.model;
 
 import javax.persistence.*;
 import javax.print.attribute.standard.MediaSize;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.Date;
 
 /**
@@ -17,6 +19,8 @@ public class PensumEntity extends PublicIdBaseEntity {
 
     /** Pensum als ganzzahliger Prozentwert zwischen 0 und 100 */
     @Column(name = "pensum", nullable = false)
+    @Min(0)
+    @Max(100)
     private int pensum;
 
     @Column(name = "anfang", nullable = false)
