@@ -8,3 +8,5 @@ Der Server erwartet eine MySQL-Datenbank. Diese muss ein Schema mit dem Namen `r
 java -jar roteroktober-server.jar --dbuser=user --dbpassword=secret
 ```
 
+Wenn alles gut geht kann jetzt die API-Dokumentation geöffnet werden:
+http://localhost:8080/swagger-ui.html
