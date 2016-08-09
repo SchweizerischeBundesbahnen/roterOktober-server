@@ -1,5 +1,6 @@
 package ch.sbb.roteroktober.server.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.util.Date;
@@ -17,6 +18,7 @@ public class ProjektResource extends ResourceSupport {
     /** Name der Organisationseinheit */
     private String oeName;
 
+    @JsonFormat(pattern = ResourceConstants.ISO_8601_DATE_PATTERN)
     private Date createdAt;
 
     public String getPublicId() {

@@ -23,10 +23,10 @@ public class PensumResource extends ResourceSupport {
     private int pensum;
 
     @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = ResourceConstants.ISO_8601_DATE_PATTERN)
     private Date anfang;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = ResourceConstants.ISO_8601_DATE_PATTERN)
     private Date ende;
 
     public String getPublicId() {
