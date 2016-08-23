@@ -7,7 +7,8 @@ public enum RolleEnum {
     ApplicationEngineer("ae"),
     SoftwareArchitect("sa"),
     TestManager("tm"),
-    ApplicationOperationManager("aom");
+    ApplicationOperationManager("aom"),
+    BusinessAnalyst("ba");
 
     private final String dbValue;
 

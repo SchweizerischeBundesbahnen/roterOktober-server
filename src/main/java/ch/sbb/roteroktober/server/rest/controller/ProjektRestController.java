@@ -62,4 +62,12 @@ public class ProjektRestController {
         // Ressource erstellen und zurückgeben
         return projektMapper.fromEntity(savedEntity);
     }
+
+    @RequestMapping(path = "/search/byname/{name}")
+    public List<ProjektResource> searchByName(@PathVariable("name") String name) {
+        // Suche ausführen
+        List<ProjektEntity> result = projektRepository.searchByName("%" + name + "%");
+
+        return result.stream().map(projektMapper::fromEntity).collect(Collectors.toList());
+    }
 }
