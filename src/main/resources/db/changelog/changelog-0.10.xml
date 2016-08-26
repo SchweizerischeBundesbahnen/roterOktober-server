@@ -119,14 +119,14 @@
     </changeSet>
 
     <changeSet id="6" author="surech">
-        <renameColumn tableName="mitarbeiter" oldColumnName="name" newColumnName="namen"/>
-        <renameColumn tableName="projekt" oldColumnName="name" newColumnName="namen"/>
+        <renameColumn tableName="mitarbeiter" oldColumnName="name" newColumnName="namen" columnDataType="varchar(100)"/>
+        <renameColumn tableName="projekt" oldColumnName="name" newColumnName="namen" columnDataType="varchar(100)"/>
     </changeSet>
     <changeSet id="7" author="surech">
-        <renameColumn tableName="einsatz" oldColumnName="createdAt" newColumnName="created_at"/>
-        <renameColumn tableName="mitarbeiter" oldColumnName="createdAt" newColumnName="created_at"/>
-        <renameColumn tableName="pensum" oldColumnName="createdAt" newColumnName="created_at"/>
-        <renameColumn tableName="projekt" oldColumnName="createdAt" newColumnName="created_at"/>
-        <renameColumn tableName="publicids" oldColumnName="createdAt" newColumnName="created_at"/>
+        <renameColumn tableName="einsatz" oldColumnName="createdAt" newColumnName="created_at" columnDataType="DATETIME"/>
+        <renameColumn tableName="mitarbeiter" oldColumnName="createdAt" newColumnName="created_at" columnDataType="DATETIME"/>
+        <renameColumn tableName="pensum" oldColumnName="createdAt" newColumnName="created_at" columnDataType="DATETIME"/>
+        <renameColumn tableName="projekt" oldColumnName="createdAt" newColumnName="created_at" columnDataType="DATETIME"/>
+        <renameColumn tableName="publicids" oldColumnName="createdAt" newColumnName="created_at" columnDataType="DATETIME"/>
     </changeSet>
 </databaseChangeLog>
