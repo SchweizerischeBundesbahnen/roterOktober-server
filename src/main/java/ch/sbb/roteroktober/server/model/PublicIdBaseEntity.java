@@ -9,7 +9,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class PublicIdBaseEntity extends CreateTimeTrackEntity {
     /** Öffentlicher Schlüssel dieser Entität */
-    @Column(name = "PUBLIC_ID", nullable = false, unique = true)
+    @Column(name = "public_id", nullable = false, unique = true)
     private String publicId;
 
     /**

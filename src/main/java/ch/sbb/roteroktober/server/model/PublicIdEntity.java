@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table(name = "publicids")
 public class PublicIdEntity extends CreateTimeTrackEntity {
 
-    @Column(name = "PUBLIC_ID", nullable = false, unique = true)
+    @Column(name = "public_id", nullable = false, unique = true)
     public String publicId;
 
     public String getPublicId() {
