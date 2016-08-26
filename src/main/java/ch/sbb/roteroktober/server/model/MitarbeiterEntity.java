@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table(name = "mitarbeiter")
 public class MitarbeiterEntity extends CreateTimeTrackEntity {
 
-    @Column(name = "name")
+    @Column(name = "namen")
     private String name;
 
     @Column(name = "vorname")

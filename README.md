@@ -3,9 +3,16 @@
  -- Capt. Marko Ramius
 
 # Getting started
-Der Server erwartet eine MySQL-Datenbank. Diese muss ein Schema mit dem Namen `roteroktober` haben. Der Benutzername und das Passwort können beim Starten der Anwendung übergeben werden:
+Der Server unterstützt MySQL und PostgreSQL als Datenbank. Diese muss ein Schema mit dem Namen `roteroktober` haben. Die Zugriffsdaten werden beim Start übergeben.
+
+**MySQL:**
 ```
-java -jar roteroktober-server.jar --dbuser=user --dbpassword=secret
+java -jar roteroktober-server.jar -Dspring.profiles.active=mysql --dbuser=user --dbpassword=secret
+```
+
+**PostgreSQL:**
+```
+java -jar roteroktober-server.jar -Dspring.profiles.active=postgresql --dbuser=user --dbpassword=secret
 ```
 
 Wenn alles gut geht kann jetzt die API-Dokumentation geöffnet werden:

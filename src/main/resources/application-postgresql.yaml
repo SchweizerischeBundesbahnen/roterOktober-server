@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${dbhost:localhost:5432}/${dbname:roteroktober}?currentSchema=${dbschema:roteroktober}
+    username: ${dbuser}
+    password: ${dbpassword}
+    driver-class-name: org.postgresql.Driver
+    test-on-borrow: true
+    validation-query: select 1
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

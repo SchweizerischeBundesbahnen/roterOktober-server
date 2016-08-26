@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${dbhost:localhost}/${dbschema:roteroktober}
+    username: ${dbuser}
+    password: ${dbpassword}
+    driver-class-name: com.mysql.jdbc.Driver
+    test-on-borrow: true
+    validation-query: select 1
