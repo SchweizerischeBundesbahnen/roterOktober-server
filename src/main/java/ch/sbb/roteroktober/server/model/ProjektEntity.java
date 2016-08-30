@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "projekt")
 public class ProjektEntity extends PublicIdBaseEntity {
-    @Column(name = "NAME")
+    @Column(name = "namen")
     private String name;
 
     /** Name der Organisationseinheit */
