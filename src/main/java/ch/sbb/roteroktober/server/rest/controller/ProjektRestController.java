@@ -65,8 +65,11 @@ public class ProjektRestController {
 
     @RequestMapping(path = "/search/byname/{name}")
     public List<ProjektResource> searchByName(@PathVariable("name") String name) {
+        // Wildcards für SQL umsetzen
+        String searchName = name.replace("*", "%");
+
         // Suche ausführen
-        List<ProjektEntity> result = projektRepository.searchByName("%" + name + "%");
+        List<ProjektEntity> result = projektRepository.searchByName(searchName);
 
         return result.stream().map(projektMapper::fromEntity).collect(Collectors.toList());
     }
