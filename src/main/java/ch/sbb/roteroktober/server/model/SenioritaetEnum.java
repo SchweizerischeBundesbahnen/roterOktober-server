@@ -1,5 +1,8 @@
 package ch.sbb.roteroktober.server.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * Repräsentiert die Seniorität eines Mitarbeiters
  */
@@ -15,10 +18,12 @@ public enum SenioritaetEnum {
         this.dbValue = dbValue;
     }
 
+    @JsonValue
     public String getDbValue() {
         return dbValue;
     }
 
+     @JsonCreator
     public static SenioritaetEnum fromDbValue(String dbValue) {
         for (SenioritaetEnum senioritaet : values()) {
             if (senioritaet.getDbValue().equalsIgnoreCase(dbValue)) {
