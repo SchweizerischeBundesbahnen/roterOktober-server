@@ -1,5 +1,8 @@
 package ch.sbb.roteroktober.server.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * Repräsentiert die Rolle eines Mitarbeiters
  */
@@ -16,10 +19,12 @@ public enum RolleEnum {
         this.dbValue = dbValue;
     }
 
+    @JsonValue
     public String getDbValue() {
         return dbValue;
     }
 
+    @JsonCreator
     public static RolleEnum fromDbValue(String dbValue) {
         for (RolleEnum rolle : values()) {
             if (rolle.getDbValue().equalsIgnoreCase(dbValue)) {
