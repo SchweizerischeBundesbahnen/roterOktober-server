@@ -11,7 +11,7 @@ import java.util.List;
  * Beschreibt die REST-Ressource für einen Einsatz eines Mitarbeiter in einem Projekt
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class EinsatzResource extends ResourceSupport {
+public class EinsatzResource extends HalResource {
 
     /** Öffentlicher Schlüssel für diesen Einsatz*/
     private String publicId;
@@ -21,8 +21,6 @@ public class EinsatzResource extends ResourceSupport {
     private SenioritaetEnum senioritaet;
 
     private ProjektResource projekt;
-
-    private List<PensumResource> pensumResource;
 
     public String getPublicId() {
         return publicId;
@@ -54,13 +52,5 @@ public class EinsatzResource extends ResourceSupport {
 
     public void setProjekt(ProjektResource projekt) {
         this.projekt = projekt;
-    }
-
-    public List<PensumResource> getPensen() {
-        return pensumResource;
-    }
-
-    public void setPensen(List<PensumResource> pensumResource) {
-        this.pensumResource = pensumResource;
     }
 }

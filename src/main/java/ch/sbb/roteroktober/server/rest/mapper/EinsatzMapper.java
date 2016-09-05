@@ -10,6 +10,7 @@ import ch.sbb.roteroktober.server.rest.model.EinsatzResource;
 import ch.sbb.roteroktober.server.rest.model.PensumResource;
 import ch.sbb.roteroktober.server.rest.model.ProjektResource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class EinsatzMapper {
 
         // Pensen auslesen
         List<PensumResource> pensen = entity.getPensen().stream().map(pensumMapper::fromEntity).collect(Collectors.toList());
-        result.setPensen(pensen);
+        result.embed("pensen", pensen);
 
         result.add(linkTo(methodOn(EinsatzRestController.class).findById(entity.getPublicId())).withSelfRel());
         result.add(linkTo(methodOn(MitarbeiterRestController.class).getByUid(entity.getMitarbeiter().getUid())).withRel("mitarbeiter"));
