@@ -5,6 +5,8 @@ import ch.sbb.roteroktober.server.model.SenioritaetEnum;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.hateoas.ResourceSupport;
 
+import java.util.List;
+
 /**
  * Beschreibt die REST-Ressource für einen Einsatz eines Mitarbeiter in einem Projekt
  */
@@ -18,8 +20,9 @@ public class EinsatzResource extends ResourceSupport {
 
     private SenioritaetEnum senioritaet;
 
-    /** ID des Projektes, für welches der Einsatz geleistet wird */
-    private String projektId;
+    private ProjektResource projekt;
+
+    private List<PensumResource> pensumResource;
 
     public String getPublicId() {
         return publicId;
@@ -45,11 +48,19 @@ public class EinsatzResource extends ResourceSupport {
         this.senioritaet = senioritaet;
     }
 
-    public String getProjektId() {
-        return projektId;
+    public ProjektResource getProjekt() {
+        return projekt;
     }
 
-    public void setProjektId(String projektId) {
-        this.projektId = projektId;
+    public void setProjekt(ProjektResource projekt) {
+        this.projekt = projekt;
+    }
+
+    public List<PensumResource> getPensen() {
+        return pensumResource;
+    }
+
+    public void setPensen(List<PensumResource> pensumResource) {
+        this.pensumResource = pensumResource;
     }
 }

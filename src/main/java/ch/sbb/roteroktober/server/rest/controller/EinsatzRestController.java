@@ -56,7 +56,7 @@ public class EinsatzRestController {
         EinsatzEntity newEinsatz = einsatzMapper.toEntity(resource);
 
         // Speichern
-        EinsatzEntity savedEinsatz = einsatzService.createEinsatz(newEinsatz, uid, resource.getProjektId());
+        EinsatzEntity savedEinsatz = einsatzService.createEinsatz(newEinsatz, uid, resource.getProjekt().getPublicId());
 
         // Wieder eine Ressource erstellen und zurückgeben
         return einsatzMapper.fromEntity(savedEinsatz);
