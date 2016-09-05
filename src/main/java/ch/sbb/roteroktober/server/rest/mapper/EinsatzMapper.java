@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -27,7 +28,7 @@ public class EinsatzMapper {
     private ProjektRestController projektRestController;
 
     @Autowired
-    private PensumRestController pensumRestController;
+    private PensumMapper pensumMapper;
 
     public EinsatzResource fromEntity(EinsatzEntity entity) {
         EinsatzResource result = new EinsatzResource();
@@ -35,8 +36,10 @@ public class EinsatzMapper {
         result.setRolle(entity.getRolle());
         result.setSenioritaet(entity.getSenioritaet());
         result.setProjekt(projektRestController.getByPublicId(entity.getProjekt().getPublicId()));
-        result.setPensen(pensumRestController.findAllByMitarbeiterAndEinsatz(entity.getMitarbeiter().getUid(), entity.getPublicId()));
 
+        // Pensen auslesen
+        List<PensumResource> pensen = entity.getPensen().stream().map(pensumMapper::fromEntity).collect(Collectors.toList());
+        result.setPensen(pensen);
 
         result.add(linkTo(methodOn(EinsatzRestController.class).findById(entity.getPublicId())).withSelfRel());
         result.add(linkTo(methodOn(MitarbeiterRestController.class).getByUid(entity.getMitarbeiter().getUid())).withRel("mitarbeiter"));
