@@ -3,13 +3,14 @@ package ch.sbb.roteroktober.server.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.Date;
 
 /**
  * Repräsentiert einen Mitarbeiter
  */
 @Entity
 @Table(name = "mitarbeiter")
-public class MitarbeiterEntity extends CreateTimeTrackEntity {
+public class MitarbeiterEntity extends DeletableEntity {
 
     @Column(name = "namen")
     private String name;

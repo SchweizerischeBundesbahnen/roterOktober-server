@@ -129,4 +129,31 @@
         <renameColumn tableName="projekt" oldColumnName="createdAt" newColumnName="created_at" columnDataType="DATETIME"/>
         <renameColumn tableName="publicids" oldColumnName="createdAt" newColumnName="created_at" columnDataType="DATETIME"/>
     </changeSet>
+
+    <changeSet id="8" author="surech">
+        <addColumn tableName="mitarbeiter">
+            <column name="deleted" type="TINYINT(1)" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="DATETIME" />
+        </addColumn>
+        <addColumn tableName="einsatz">
+            <column name="deleted" type="TINYINT(1)" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="DATETIME" />
+        </addColumn>
+        <addColumn tableName="pensum">
+            <column name="deleted" type="TINYINT(1)" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="DATETIME" />
+        </addColumn>
+        <addColumn tableName="projekt">
+            <column name="deleted" type="TINYINT(1)" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="DATETIME" />
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
