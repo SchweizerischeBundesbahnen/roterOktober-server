@@ -20,7 +20,8 @@ public class EinsatzResource extends HalResource {
 
     private SenioritaetEnum senioritaet;
 
-    private ProjektResource projekt;
+    /** ID des Projektes, für welches der Einsatz geleistet wird */
+    private String projektId;
 
     public String getPublicId() {
         return publicId;
@@ -46,11 +47,11 @@ public class EinsatzResource extends HalResource {
         this.senioritaet = senioritaet;
     }
 
-    public ProjektResource getProjekt() {
-        return projekt;
+    public String getProjektId() {
+        return projektId;
     }
 
-    public void setProjekt(ProjektResource projekt) {
-        this.projekt = projekt;
+    public void setProjektId(String projektId) {
+        this.projektId = projektId;
     }
 }
