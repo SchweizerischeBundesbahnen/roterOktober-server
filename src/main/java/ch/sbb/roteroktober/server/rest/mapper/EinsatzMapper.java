@@ -7,7 +7,14 @@ import ch.sbb.roteroktober.server.rest.controller.MitarbeiterRestController;
 import ch.sbb.roteroktober.server.rest.controller.PensumRestController;
 import ch.sbb.roteroktober.server.rest.controller.ProjektRestController;
 import ch.sbb.roteroktober.server.rest.model.EinsatzResource;
+import ch.sbb.roteroktober.server.rest.model.PensumResource;
+import ch.sbb.roteroktober.server.rest.model.ProjektResource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -18,11 +25,21 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Component
 public class EinsatzMapper {
 
+    @Autowired
+    private ProjektRestController projektRestController;
+
+    @Autowired
+    private PensumMapper pensumMapper;
+
     public EinsatzResource fromEntity(EinsatzEntity entity) {
         EinsatzResource result = new EinsatzResource();
         result.setPublicId(entity.getPublicId());
         result.setRolle(entity.getRolle());
         result.setSenioritaet(entity.getSenioritaet());
+
+        // Pensen auslesen
+        List<PensumResource> pensen = entity.getPensen().stream().map(pensumMapper::fromEntity).collect(Collectors.toList());
+        result.embed("pensen", pensen);
 
         result.add(linkTo(methodOn(EinsatzRestController.class).findById(entity.getPublicId())).withSelfRel());
         result.add(linkTo(methodOn(ProjektRestController.class).getByPublicId(entity.getProjekt().getPublicId())).withRel("projekt"));

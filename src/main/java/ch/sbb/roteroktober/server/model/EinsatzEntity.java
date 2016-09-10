@@ -1,6 +1,8 @@
 package ch.sbb.roteroktober.server.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Repräsentiert einen Einsatz eines Mitarbeiters in einem Projekt
@@ -22,6 +24,9 @@ public class EinsatzEntity extends PublicIdBaseEntity {
 
     @Column(name = "senioritaet")
     private String senioritaet;
+
+    @OneToMany(mappedBy = "einsatz", fetch = FetchType.EAGER)
+    private List<PensumEntity> pensen;
 
     public MitarbeiterEntity getMitarbeiter() {
         return mitarbeiter;
@@ -53,5 +58,12 @@ public class EinsatzEntity extends PublicIdBaseEntity {
 
     public void setSenioritaet(SenioritaetEnum senioritaet) {
         this.senioritaet = senioritaet == null ? null : senioritaet.getDbValue();
+    }
+
+    public List<PensumEntity> getPensen() {
+        if(this.pensen == null){
+            this.pensen = new ArrayList<>();
+        }
+        return this.pensen;
     }
 }
