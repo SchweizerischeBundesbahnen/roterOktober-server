@@ -11,8 +11,13 @@ import java.util.List;
  * Datenbank-Zugriff auf die Projekte
  */
 public interface ProjektRepository extends CrudRepository<ProjektEntity, Long> {
-    ProjektEntity findByPublicId(String publicId);
 
-    @Query("SELECT p FROM ProjektEntity p WHERE upper(p.name) like upper(:name)")
+    @Query("SELECT p FROM ProjektEntity p WHERE p.deleted = false")
+    List<ProjektEntity> findAll();
+
+    @Query("SELECT p FROM ProjektEntity p WHERE p.publicId = :publicId AND p.deleted = false")
+    ProjektEntity findByPublicId(@Param("publicId") String publicId);
+
+    @Query("SELECT p FROM ProjektEntity p WHERE upper(p.name) like upper(:name) AND p.deleted = false")
     List<ProjektEntity> searchByName(@Param("name") String name);
 }

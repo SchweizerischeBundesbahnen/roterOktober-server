@@ -1,11 +1,13 @@
 package ch.sbb.roteroktober.server.model;
 
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
 /**
  * Basisklasse für eine Enität, welche gelöscht werden kann.
  */
+@MappedSuperclass
 public class DeletableEntity extends CreateTimeTrackEntity {
     @Column(name = "deleted")
     private boolean deleted = false;

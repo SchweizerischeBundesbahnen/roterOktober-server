@@ -156,4 +156,12 @@
             <column name="deleted_at" type="DATETIME" />
         </addColumn>
     </changeSet>
+
+    <changeSet id="9" author="surech">
+        <dropUniqueConstraint tableName="mitarbeiter" uniqueColumns="uid" constraintName="uid" />
+        <addUniqueConstraint tableName="mitarbeiter" columnNames="uid,deleted_at" constraintName="uc_uid"/>
+
+        <dropUniqueConstraint tableName="projekt" uniqueColumns="namen" constraintName="name"/>
+        <addUniqueConstraint tableName="projekt" columnNames="namen,deleted_at" constraintName="uc_name"/>
+    </changeSet>
 </databaseChangeLog>

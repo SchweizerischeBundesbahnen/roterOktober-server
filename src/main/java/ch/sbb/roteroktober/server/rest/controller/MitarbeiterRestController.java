@@ -6,6 +6,7 @@ import ch.sbb.roteroktober.server.rest.exceptions.NotFoundException;
 import ch.sbb.roteroktober.server.rest.mapper.MitarbeiterMapper;
 import ch.sbb.roteroktober.server.rest.model.MitarbeiterResource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,10 +30,10 @@ public class MitarbeiterRestController {
     @RequestMapping(method = RequestMethod.GET)
     public List<MitarbeiterResource> getAll(){
         // Alle Mitarbeiter laden
-        Iterable<MitarbeiterEntity> entities = mitarbeiterRepository.findAll();
+        List<MitarbeiterEntity> entities = mitarbeiterRepository.findAll();
 
         // Ressourcen erstellen
-        return StreamSupport.stream(entities.spliterator(), false).map(mitarbeiterMapper::fromEntity).collect(Collectors.toList());
+        return entities.stream().map(mitarbeiterMapper::fromEntity).collect(Collectors.toList());
     }
 
     @RequestMapping(path = "/{uid}", method = RequestMethod.GET)
@@ -58,5 +59,11 @@ public class MitarbeiterRestController {
 
         // Zurückmappen und zurückgeben
         return mitarbeiterMapper.fromEntity(savedEntity);
+    }
+
+//    @Transactional
+    @RequestMapping(path = "/{uid}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("uid") String uid){
+        mitarbeiterRepository.setDeleteFlag(uid);
     }
 }

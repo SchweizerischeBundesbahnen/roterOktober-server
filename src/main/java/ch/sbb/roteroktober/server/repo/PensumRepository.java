@@ -11,8 +11,13 @@ import java.util.List;
  * Datenbank-Zugriffe auf die Pensen
  */
 public interface PensumRepository extends CrudRepository<PensumEntity, Long> {
-    PensumEntity findByPublicId(String publicId);
 
-    @Query("SELECT p FROM PensumEntity p JOIN p.einsatz e JOIN e.mitarbeiter m WHERE m.uid = :uid AND e.publicId = :einsatzId")
+    @Query("SELECT p FROM PensumEntity p WHERE p.deleted = false")
+    List<PensumEntity> findAll();
+
+    @Query("SELECT p FROM PensumEntity p WHERE p.publicId = :publicId AND p.deleted = false")
+    PensumEntity findByPublicId(@Param("publicId") String publicId);
+
+    @Query("SELECT p FROM PensumEntity p JOIN p.einsatz e JOIN e.mitarbeiter m WHERE m.uid = :uid AND e.publicId = :einsatzId AND p.deleted = false")
     List<PensumEntity> findByMitarbeiterAndEinsatz(@Param("uid") String uid, @Param("einsatzId") String einsatzId);
 }
