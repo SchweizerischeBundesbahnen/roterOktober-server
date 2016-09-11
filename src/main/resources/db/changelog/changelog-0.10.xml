@@ -17,7 +17,7 @@
                 <constraints nullable="false" unique="false"/>
             </column>
             <column name="uid" type="varchar(15)">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false" unique="false"/>
             </column>
             <column name="createdAt" type="DATETIME">
                 <constraints nullable="false" unique="false"/>
@@ -48,7 +48,7 @@
                 <constraints nullable="false" unique="true"/>
             </column>
             <column name="NAME" type="varchar(100)" remarks="Name des Projektes">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false" unique="false"/>
             </column>
             <column name="OE_NAME" type="varchar(100)" remarks="Name der Organisationseinheit">
                 <constraints nullable="false" unique="false"/>
@@ -158,10 +158,7 @@
     </changeSet>
 
     <changeSet id="9" author="surech">
-        <dropUniqueConstraint tableName="mitarbeiter" uniqueColumns="uid" constraintName="uid" />
         <addUniqueConstraint tableName="mitarbeiter" columnNames="uid,deleted_at" constraintName="uc_uid"/>
-
-        <dropUniqueConstraint tableName="projekt" uniqueColumns="namen" constraintName="name"/>
         <addUniqueConstraint tableName="projekt" columnNames="namen,deleted_at" constraintName="uc_name"/>
     </changeSet>
 </databaseChangeLog>
