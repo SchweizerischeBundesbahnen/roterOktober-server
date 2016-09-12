@@ -17,21 +17,10 @@ import static org.hamcrest.Matchers.*;
 /**
  * Integrationtest des Mitarbeiters über die REST-Schnittstelle
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("h2,test")
-public class MitarbeiterIntegrationTest {
-
-    @LocalServerPort
-    private String port;
-
-    @Before
-    public void setUp() throws Exception {
-        RestAssured.baseURI = "http://localhost:" + port;
-    }
+public class MitarbeiterIntegrationTest extends IntegrationTestBase {
 
     @Test
-    public void testCRUD() throws Exception {
+    public void testCreateDelete() throws Exception {
         // Daten laden. Es sollte noch alles leer sein
         when().get("/mitarbeiter").then().body("size()", is(0)).statusCode(200);
         when().get("/mitarbeiter/u123456").then().statusCode(404);

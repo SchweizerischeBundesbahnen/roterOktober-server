@@ -73,4 +73,8 @@ public class ProjektRestController {
 
         return result.stream().map(projektMapper::fromEntity).collect(Collectors.toList());
     }
+    @RequestMapping(path = "/{publicId}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("publicId") String publicId) {
+        projektRepository.setDeleteFlag(publicId);
+    }
 }

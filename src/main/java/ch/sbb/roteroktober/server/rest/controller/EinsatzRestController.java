@@ -29,7 +29,7 @@ public class EinsatzRestController {
     private EinsatzService einsatzService;
 
     @RequestMapping(path = "/mitarbeiter/{uid}/einsatz", method = RequestMethod.GET)
-    public List<EinsatzResource> findAllByMitarbeiter(@PathVariable("uid") String uid){
+    public List<EinsatzResource> findAllByMitarbeiter(@PathVariable("uid") String uid) {
         // Einsätze suchen
         List<EinsatzEntity> einsaetze = einsatzRepository.findByUID(uid);
 
@@ -60,5 +60,10 @@ public class EinsatzRestController {
 
         // Wieder eine Ressource erstellen und zurückgeben
         return einsatzMapper.fromEntity(savedEinsatz);
+    }
+
+    @RequestMapping(path = "/einsatz/{einsatzId}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("einsatzId") String einsatzId) {
+        einsatzRepository.setDeleteFlag(einsatzId);
     }
 }
