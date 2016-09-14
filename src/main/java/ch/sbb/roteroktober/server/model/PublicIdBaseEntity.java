@@ -7,7 +7,7 @@ import javax.persistence.MappedSuperclass;
  * Eine Basisklasse für alle Entitäten mit öffentlichem Schlüssel.
  */
 @MappedSuperclass
-public class PublicIdBaseEntity extends CreateTimeTrackEntity {
+public class PublicIdBaseEntity extends DeletableEntity {
     /** Öffentlicher Schlüssel dieser Entität */
     @Column(name = "public_id", nullable = false, unique = true)
     private String publicId;

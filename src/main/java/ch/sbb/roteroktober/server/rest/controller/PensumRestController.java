@@ -38,7 +38,7 @@ public class PensumRestController {
     }
 
     @RequestMapping(path = "/pensum/{pensumId}", method = RequestMethod.GET)
-    public PensumResource findById(@PathVariable("pensumId") String pensumId){
+    public PensumResource findById(@PathVariable("pensumId") String pensumId) {
         // Pensum suchen
         PensumEntity pensum = pensumRepository.findByPublicId(pensumId);
 
@@ -51,7 +51,7 @@ public class PensumRestController {
     }
 
     @RequestMapping(path = "/mitarbeiter/{uid}/einsatz/{einsatzId}/pensum", method = RequestMethod.POST)
-    public PensumResource createNew(@PathVariable("uid") String uid, @PathVariable("einsatzId") String einsatzId, @Validated @RequestBody PensumResource resource){
+    public PensumResource createNew(@PathVariable("uid") String uid, @PathVariable("einsatzId") String einsatzId, @Validated @RequestBody PensumResource resource) {
         // Entity erstellen
         PensumEntity newPensum = pensumMapper.toEntity(resource);
 
@@ -60,5 +60,10 @@ public class PensumRestController {
 
         // Wieder eine Ressource erstellen und zurückgeben
         return pensumMapper.fromEntity(savedPensum);
+    }
+
+    @RequestMapping(path = "/pensum/{pensumId}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("pensumId") String pensumId) {
+        pensumRepository.setDeleteFlag(pensumId);
     }
 }

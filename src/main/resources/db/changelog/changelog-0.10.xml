@@ -17,7 +17,7 @@
                 <constraints nullable="false" unique="false"/>
             </column>
             <column name="uid" type="varchar(15)">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false" unique="false"/>
             </column>
             <column name="createdAt" type="DATETIME">
                 <constraints nullable="false" unique="false"/>
@@ -31,12 +31,13 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="PUBLIC_ID" type="varchar(50)" remarks="Öffentlicher Schlüssel">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false" unique="false"/>
             </column>
             <column name="createdAt" type="DATETIME">
                 <constraints nullable="false" unique="false"/>
             </column>
         </createTable>
+        <addUniqueConstraint tableName="publicids" columnNames="PUBLIC_ID" constraintName="uc_publicid_public_id"/>
     </changeSet>
 
     <changeSet id="3" author="surech">
@@ -45,10 +46,10 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="PUBLIC_ID" type="varchar(50)" remarks="Öffentlicher Schlüssel">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false" unique="false"/>
             </column>
             <column name="NAME" type="varchar(100)" remarks="Name des Projektes">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false" unique="false"/>
             </column>
             <column name="OE_NAME" type="varchar(100)" remarks="Name der Organisationseinheit">
                 <constraints nullable="false" unique="false"/>
@@ -57,6 +58,7 @@
                 <constraints nullable="false" unique="false"/>
             </column>
         </createTable>
+        <addUniqueConstraint tableName="projekt" columnNames="PUBLIC_ID" constraintName="uc_projekt_public_id"/>
     </changeSet>
     <changeSet id="4" author="surech">
         <createTable tableName="einsatz">
@@ -64,7 +66,7 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="PUBLIC_ID" type="varchar(50)" remarks="Öffentlicher Schlüssel">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false" unique="false"/>
             </column>
             <column name="MITARBEITER_FK" type="BIGINT" remarks="Femdschlüsel auf den Mitarbeiter">
                 <constraints nullable="false" unique="false"/>
@@ -91,6 +93,7 @@
                                  constraintName="EINSATZ_PROJEKT_FK"
                                  referencedTableName="projekt"
                                  referencedColumnNames="ID"/>
+        <addUniqueConstraint tableName="einsatz" columnNames="PUBLIC_ID" constraintName="uc_einsatz_public_id"/>
     </changeSet>
     <changeSet id="5" author="surech">
         <createTable tableName="pensum">
@@ -98,7 +101,7 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="PUBLIC_ID" type="varchar(50)" remarks="Öffentlicher Schlüssel">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false" unique="false"/>
             </column>
             <column name="EINSATZ_FK" type="BIGINT" remarks="Femdschlüsel auf den Einsatz">
                 <constraints nullable="false" unique="false"/>
@@ -116,6 +119,7 @@
                 <constraints nullable="false" unique="false"/>
             </column>
         </createTable>
+        <addUniqueConstraint tableName="pensum" columnNames="PUBLIC_ID" constraintName="uc_pensum_public_id"/>
     </changeSet>
 
     <changeSet id="6" author="surech">
@@ -128,5 +132,37 @@
         <renameColumn tableName="pensum" oldColumnName="createdAt" newColumnName="created_at" columnDataType="DATETIME"/>
         <renameColumn tableName="projekt" oldColumnName="createdAt" newColumnName="created_at" columnDataType="DATETIME"/>
         <renameColumn tableName="publicids" oldColumnName="createdAt" newColumnName="created_at" columnDataType="DATETIME"/>
+    </changeSet>
+
+    <changeSet id="8" author="surech">
+        <addColumn tableName="mitarbeiter">
+            <column name="deleted" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="DATETIME" />
+        </addColumn>
+        <addColumn tableName="einsatz">
+            <column name="deleted" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="DATETIME" />
+        </addColumn>
+        <addColumn tableName="pensum">
+            <column name="deleted" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="DATETIME" />
+        </addColumn>
+        <addColumn tableName="projekt">
+            <column name="deleted" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="DATETIME" />
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="9" author="surech">
+        <addUniqueConstraint tableName="mitarbeiter" columnNames="uid,deleted_at" constraintName="uc_mitarbeiter_uid"/>
+        <addUniqueConstraint tableName="projekt" columnNames="namen,deleted_at" constraintName="uc_projekt_9name"/>
     </changeSet>
 </databaseChangeLog>
