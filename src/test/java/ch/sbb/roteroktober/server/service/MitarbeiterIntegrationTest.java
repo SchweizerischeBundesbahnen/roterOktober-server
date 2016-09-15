@@ -27,7 +27,7 @@ public class MitarbeiterIntegrationTest extends IntegrationTestBase {
 
         // Mitarbeiter erfassen
         given().
-                body("{\"name\":\"Muster\",\"vorname\":\"Hans\",\"uid\":\"u123456\"}").
+                body("{\"name\":\"Muster\",\"vorname\":\"Hans\",\"uid\":\"u123456\",\"oeName\":\"IT-SWE-CD3-JV6\"}").
                 contentType(ContentType.JSON).
                 when().
                 post("/mitarbeiter").
@@ -44,6 +44,7 @@ public class MitarbeiterIntegrationTest extends IntegrationTestBase {
                 body("name", is("Muster")).
                 body("vorname", is("Hans")).
                 body("uid", is("u123456")).
+                body("oeName", is("IT-SWE-CD3-JV6")).
                 body("_links.self.href", endsWith("/mitarbeiter/u123456"));
 
         // Mitarbeiter wieder löschen

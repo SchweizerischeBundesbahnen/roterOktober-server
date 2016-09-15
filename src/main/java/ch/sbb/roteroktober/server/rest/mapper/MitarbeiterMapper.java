@@ -18,6 +18,7 @@ public class MitarbeiterMapper {
         result.setName(entity.getName());
         result.setVorname(entity.getVorname());
         result.setUid(entity.getUid());
+        result.setOeName(entity.getOeName());
 
         result.add(linkTo(methodOn(MitarbeiterRestController.class).getByUid(entity.getUid())).withSelfRel());
 
@@ -29,6 +30,7 @@ public class MitarbeiterMapper {
         result.setName(resource.getName());
         result.setVorname(resource.getVorname());
         result.setUid(resource.getUid());
+        result.setOeName(resource.getOeName());
 
         return result;
     }

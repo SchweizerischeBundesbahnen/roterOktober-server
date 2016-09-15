@@ -21,6 +21,9 @@ public class MitarbeiterEntity extends DeletableEntity {
     @Column(name = "uid")
     private String uid;
 
+    @Column
+    private String oeName;
+
     public String getName() {
         return name;
     }
@@ -43,5 +46,13 @@ public class MitarbeiterEntity extends DeletableEntity {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getOeName() {
+        return oeName;
+    }
+
+    public void setOeName(String oeName) {
+        this.oeName = oeName;
     }
 }
