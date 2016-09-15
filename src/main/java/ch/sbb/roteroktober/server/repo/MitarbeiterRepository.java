@@ -3,6 +3,7 @@ package ch.sbb.roteroktober.server.repo;
 import ch.sbb.roteroktober.server.model.MitarbeiterEntity;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * Datenbank-Zugriff auf den Mitarbeiter
  */
-public interface MitarbeiterRepository extends CrudRepository<MitarbeiterEntity, Long> {
+public interface MitarbeiterRepository extends CrudRepository<MitarbeiterEntity, Long>, QueryDslPredicateExecutor<MitarbeiterEntity> {
 
     @Query("SELECT m FROM MitarbeiterEntity m WHERE m.uid = :uid AND m.deleted = false")
     MitarbeiterEntity findByUID(@Param("uid") String uid);

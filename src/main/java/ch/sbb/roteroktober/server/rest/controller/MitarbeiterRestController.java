@@ -5,6 +5,7 @@ import ch.sbb.roteroktober.server.repo.MitarbeiterRepository;
 import ch.sbb.roteroktober.server.rest.exceptions.NotFoundException;
 import ch.sbb.roteroktober.server.rest.mapper.MitarbeiterMapper;
 import ch.sbb.roteroktober.server.rest.model.MitarbeiterResource;
+import ch.sbb.roteroktober.server.service.MitarbeiterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +27,9 @@ public class MitarbeiterRestController {
 
     @Autowired
     private MitarbeiterMapper mitarbeiterMapper;
+
+    @Autowired
+    private MitarbeiterService mitarbeiterService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<MitarbeiterResource> getAll(){
@@ -61,9 +65,17 @@ public class MitarbeiterRestController {
         return mitarbeiterMapper.fromEntity(savedEntity);
     }
 
-//    @Transactional
     @RequestMapping(path = "/{uid}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("uid") String uid){
         mitarbeiterRepository.setDeleteFlag(uid);
+    }
+
+    @RequestMapping(path = "/search", method = RequestMethod.GET)
+    public List<MitarbeiterResource> search(@RequestParam String oeName){
+        // Suche ausführen
+        Iterable<MitarbeiterEntity> searchResult = mitarbeiterService.search(oeName);
+
+        // Mappen
+        return StreamSupport.stream(searchResult.spliterator(), false).map(mitarbeiterMapper::fromEntity).collect(Collectors.toList());
     }
 }

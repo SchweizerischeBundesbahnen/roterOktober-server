@@ -54,4 +54,53 @@ public class MitarbeiterIntegrationTest extends IntegrationTestBase {
         when().get("/mitarbeiter").then().body("size()", is(0)).statusCode(200);
         when().get("/mitarbeiter/u123456").then().statusCode(404);
     }
+
+    @Test
+    public void testSearch() throws Exception {
+        // Einige Mitarbeite erfassen
+        given().
+                body("{\"name\":\"Muster\",\"vorname\":\"Hans\",\"uid\":\"u123456\",\"oeName\":\"IT-SWE-CD3-JV6\"}").
+                contentType(ContentType.JSON).
+                when().
+                post("/mitarbeiter").
+                then().
+                statusCode(200);
+        given().
+                body("{\"name\":\"Müller\",\"vorname\":\"Peter\",\"uid\":\"u999888\",\"oeName\":\"IT-SWE-CD3-JV3\"}").
+                contentType(ContentType.JSON).
+                when().
+                post("/mitarbeiter").
+                then().
+                statusCode(200);
+        given().
+                body("{\"name\":\"Meier\",\"vorname\":\"Andreas\",\"uid\":\"u111222\",\"oeName\":\"IT-SWE-TF-TF1\"}").
+                contentType(ContentType.JSON).
+                when().
+                post("/mitarbeiter").
+                then().
+                statusCode(200);
+
+        // Suche nach OE
+        given().
+                when().
+                get("/mitarbeiter/search?oeName=IT-SWE-CD3-JV6").
+                then().
+                statusCode(200).
+                body("size()", is(1)).
+                body("[0].name", is("Muster"));
+
+        given().
+                when().
+                get("/mitarbeiter/search?oeName=IT-AQ").
+                then().
+                statusCode(200).
+                body("size()", is(0));
+
+        given().
+                when().
+                get("/mitarbeiter/search?oeName=IT-SWE-CD3*").
+                then().
+                statusCode(200).
+                body("size()", is(2));
+    }
 }
