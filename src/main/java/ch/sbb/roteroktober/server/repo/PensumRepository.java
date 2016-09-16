@@ -25,6 +25,6 @@ public interface PensumRepository extends CrudRepository<PensumEntity, Long> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE PensumEntity p SET p.deleted = true, p.deletedAt = sysdate() WHERE p.publicId = :publicId")
+    @Query("UPDATE PensumEntity p SET p.deleted = true, p.deletedAt = CURRENT_TIMESTAMP WHERE p.publicId = :publicId")
     void setDeleteFlag(@Param("publicId") String publicId);
 }
