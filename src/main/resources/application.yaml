@@ -9,7 +9,7 @@ spring:
 
 liquibase:
   change-log: classpath:/db/changelog/changelog.xml
-  default-schema: roteroktober
+  default-schema: ${dbschema:roteroktober}
 logging:
   level:
     org:
