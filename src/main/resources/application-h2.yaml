@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:roteroktober;INIT=CREATE SCHEMA IF NOT EXISTS roteroktober
+    url: jdbc:h2:mem:roteroktober;INIT=CREATE SCHEMA IF NOT EXISTS ${dbschema:roteroktober}
     username: 'sa'
     password: 'sa'
     driver-class-name: org.h2.Driver
