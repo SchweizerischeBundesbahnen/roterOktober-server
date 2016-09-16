@@ -22,6 +22,6 @@ public interface MitarbeiterRepository extends CrudRepository<MitarbeiterEntity,
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE MitarbeiterEntity m SET m.deleted = true, m.deletedAt = sysdate() WHERE m.uid = :uid")
+    @Query("UPDATE MitarbeiterEntity m SET m.deleted = true, m.deletedAt = CURRENT_TIMESTAMP WHERE m.uid = :uid")
     void setDeleteFlag(@Param("uid") String uid);
 }
