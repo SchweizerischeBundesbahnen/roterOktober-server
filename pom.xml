@@ -100,6 +100,22 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
+	<scm>
+		<connection>scm:git:https://github.com/SchweizerischeBundesbahnen/roterOktober-server.git</connection>
+		<developerConnection>scm:git:https://github.com/SchweizerischeBundesbahnen/roterOktober-server.git</developerConnection>
+		<url>scm:git:https://github.com/SchweizerischeBundesbahnen/roterOktober-server.git</url>
+	</scm>
+
+	<distributionManagement>
+		<repository>
+			<id>hosted.roteroktober.releases</id>
+			<url>http://repo.sbb.ch/content/repositories/hosted.roteroktober.releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>hosted.roteroktober.snapshots</id>
+			<url>http://repo.sbb.ch/content/repositories/hosted.roteroktober.snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 </project>
