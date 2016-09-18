@@ -14,14 +14,14 @@ public class PensumIntegrationTest extends IntegrationTestBase {
     @Test
     public void testCreateDelete() throws Exception {
         // Mitarbeiter, Projekt und Einsatz anlegen
-        String uid = createMitarbeiter();
-        String projektId = createProjekt();
-        String einsatzId = createEinsatz(uid, projektId);
+        String uid = TestDatenGenerator.createMitarbeiter("Muster", "Hans", "u123456", "IT-SWE");
+        String projektId = TestDatenGenerator.createProjekt("SVS Webshop", "IT-SCP-MVD-VKA");
+        String einsatzId = TestDatenGenerator.createEinsatz("ae", "prof", uid, projektId);
 
         // Es sollte noch kein Pensum geben
         when().get("/mitarbeiter/" + uid + "/einsatz/" + einsatzId + "/pensum").then().body("size()", is(0));
 
-        // Einsatz anlegen
+        // Pensum anlegen
         String pensumId = given().
                 body("{\"pensum\":80,\"anfang\":\"2016-02-01T00:00:00.000Z\"}").
                 contentType(ContentType.JSON).
@@ -41,38 +41,5 @@ public class PensumIntegrationTest extends IntegrationTestBase {
         // Jetzt sollte wieder alles weg sein
         when().get("/mitarbeiter/" + uid + "/einsatz/" + einsatzId + "/pensum").then().body("size()", is(0));
         when().get("/pensum/" + pensumId).then().statusCode(404);
-    }
-
-    private String createMitarbeiter(){
-        given().
-                body("{\"name\":\"Muster\",\"vorname\":\"Hans\",\"uid\":\"u123456\"}").
-                contentType(ContentType.JSON).
-                when().
-                post("/mitarbeiter").
-                then().
-                statusCode(200).
-                body("name", is("Muster"));
-        return "u123456";
-    }
-
-    private String createProjekt(){
-        String publicId = given().
-                body("{\"name\":\"SVS Webshop\",\"oeName\":\"IT-SCP-MVD-VKA\"}").
-                contentType(ContentType.JSON).
-                when().
-                post("/projekt").
-                then().
-                statusCode(200).extract().path("publicId");
-        return publicId;
-    }
-
-    private String createEinsatz(String uid, String projektId){
-        String publicId = given().
-                body("{\"rolle\":\"ae\",\"senioritaet\":\"prof\",\"projektId\":\"" + projektId + "\"}").
-                contentType(ContentType.JSON).
-                when().
-                post("/mitarbeiter/" + uid + "/einsatz").
-                then().statusCode(200).body("rolle", is("ae")).body("senioritaet", is("prof")).extract().path("publicId");
-        return publicId;
     }
 }

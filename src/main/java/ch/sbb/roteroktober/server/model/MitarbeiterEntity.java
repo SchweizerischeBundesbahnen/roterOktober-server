@@ -1,9 +1,9 @@
 package ch.sbb.roteroktober.server.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Repräsentiert einen Mitarbeiter
@@ -23,6 +23,9 @@ public class MitarbeiterEntity extends DeletableEntity {
 
     @Column
     private String oeName;
+
+    @OneToMany(mappedBy = "mitarbeiter")
+    private List<EinsatzEntity> einsaetze;
 
     public String getName() {
         return name;
@@ -54,5 +57,12 @@ public class MitarbeiterEntity extends DeletableEntity {
 
     public void setOeName(String oeName) {
         this.oeName = oeName;
+    }
+
+    public List<EinsatzEntity> getEinsaetze() {
+        if(einsaetze == null){
+            einsaetze = new ArrayList<>();
+        }
+        return einsaetze;
     }
 }
