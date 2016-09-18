@@ -25,6 +25,6 @@ public interface ProjektRepository extends CrudRepository<ProjektEntity, Long> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE ProjektEntity p SET p.deleted = true, p.deletedAt = sysdate() WHERE p.publicId = :publicId")
+    @Query("UPDATE ProjektEntity p SET p.deleted = true, p.deletedAt = CURRENT_TIMESTAMP WHERE p.publicId = :publicId")
     void setDeleteFlag(@Param("publicId") String publicId);
 }

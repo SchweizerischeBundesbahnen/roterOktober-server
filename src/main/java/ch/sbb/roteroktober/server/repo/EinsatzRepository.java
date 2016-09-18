@@ -26,6 +26,6 @@ public interface EinsatzRepository extends CrudRepository<EinsatzEntity, Long> {
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE EinsatzEntity e SET e.deleted = true, e.deletedAt = sysdate() WHERE e.publicId = :publicId")
+    @Query("UPDATE EinsatzEntity e SET e.deleted = true, e.deletedAt = CURRENT_TIMESTAMP WHERE e.publicId = :publicId")
     void setDeleteFlag(@Param("publicId") String publicId);
 }

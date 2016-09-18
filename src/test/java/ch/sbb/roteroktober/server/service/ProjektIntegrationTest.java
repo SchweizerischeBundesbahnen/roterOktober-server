@@ -4,7 +4,6 @@ import io.restassured.http.ContentType;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.*;
-import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
 /**
