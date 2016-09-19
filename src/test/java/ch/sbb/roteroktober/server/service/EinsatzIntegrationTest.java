@@ -14,8 +14,8 @@ public class EinsatzIntegrationTest extends IntegrationTestBase {
     @Test
     public void testCreateDelete() throws Exception {
         // Für die Einsätze brauchen wir einen Mitarbeiter und ein Projekt.
-        String uid = createMitarbeiter();
-        String projektId = createProjekt();
+        String uid = TestDatenGenerator.createMitarbeiter("Muster", "Hans", "u123456", "IT-SWE");
+        String projektId = TestDatenGenerator.createProjekt("SVS Webshop", "IT-SCP-MVD-VKA");
 
         // Noch sollte es keinen Einsatz geben
         when().get("/mitarbeiter/" + uid + "/einsatz").then().body("size()", is(0));
@@ -39,28 +39,4 @@ public class EinsatzIntegrationTest extends IntegrationTestBase {
         when().get("/mitarbeiter/" + uid + "/einsatz").then().body("size()", is(0));
         when().get("/einsatz/" + publicId).then().statusCode(404);
     }
-
-    private String createMitarbeiter(){
-        given().
-                body("{\"name\":\"Muster\",\"vorname\":\"Hans\",\"uid\":\"u123456\"}").
-                contentType(ContentType.JSON).
-                when().
-                post("/mitarbeiter").
-                then().
-                statusCode(200).
-                body("name", is("Muster"));
-        return "u123456";
-    }
-
-    private String createProjekt(){
-        String publicId = given().
-                body("{\"name\":\"SVS Webshop\",\"oeName\":\"IT-SCP-MVD-VKA\"}").
-                contentType(ContentType.JSON).
-                when().
-                post("/projekt").
-                then().
-                statusCode(200).extract().path("publicId");
-        return publicId;
-    }
-
 }

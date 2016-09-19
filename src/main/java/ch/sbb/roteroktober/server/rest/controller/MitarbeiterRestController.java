@@ -2,11 +2,11 @@ package ch.sbb.roteroktober.server.rest.controller;
 
 import ch.sbb.roteroktober.server.model.MitarbeiterEntity;
 import ch.sbb.roteroktober.server.repo.MitarbeiterRepository;
+import ch.sbb.roteroktober.server.repo.MitarbeiterRepositoryCustom;
 import ch.sbb.roteroktober.server.rest.exceptions.NotFoundException;
 import ch.sbb.roteroktober.server.rest.mapper.MitarbeiterMapper;
 import ch.sbb.roteroktober.server.rest.model.MitarbeiterResource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +25,13 @@ public class MitarbeiterRestController {
     private MitarbeiterRepository mitarbeiterRepository;
 
     @Autowired
+    private MitarbeiterRepositoryCustom mitarbeiterRepositoryCustom;
+
+    @Autowired
     private MitarbeiterMapper mitarbeiterMapper;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<MitarbeiterResource> getAll(){
+    public List<MitarbeiterResource> getAll() {
         // Alle Mitarbeiter laden
         List<MitarbeiterEntity> entities = mitarbeiterRepository.findAll();
 
@@ -61,9 +64,17 @@ public class MitarbeiterRestController {
         return mitarbeiterMapper.fromEntity(savedEntity);
     }
 
-//    @Transactional
     @RequestMapping(path = "/{uid}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("uid") String uid){
+    public void delete(@PathVariable("uid") String uid) {
         mitarbeiterRepository.setDeleteFlag(uid);
+    }
+
+    @RequestMapping(path = "/search", method = RequestMethod.GET)
+    public List<MitarbeiterResource> search(@RequestParam(required = false) String oeName, @RequestParam(required = false) String projektId) {
+        // Suche ausführen
+        Iterable<MitarbeiterEntity> searchResult = mitarbeiterRepositoryCustom.search(oeName, projektId);
+
+        // Mappen
+        return StreamSupport.stream(searchResult.spliterator(), false).map(mitarbeiterMapper::fromEntity).collect(Collectors.toList());
     }
 }

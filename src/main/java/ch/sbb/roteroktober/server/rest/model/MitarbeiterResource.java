@@ -17,6 +17,9 @@ public class MitarbeiterResource extends ResourceSupport {
     @Size(min = 7, max = 15)
     private String uid;
 
+    @Size(min = 1, max = 100)
+    private String oeName;
+
     public String getName() {
         return name;
     }
@@ -39,5 +42,13 @@ public class MitarbeiterResource extends ResourceSupport {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getOeName() {
+        return oeName;
+    }
+
+    public void setOeName(String oeName) {
+        this.oeName = oeName;
     }
 }

@@ -165,4 +165,12 @@
         <addUniqueConstraint tableName="mitarbeiter" columnNames="uid,deleted_at" constraintName="uc_mitarbeiter_uid"/>
         <addUniqueConstraint tableName="projekt" columnNames="namen,deleted_at" constraintName="uc_projekt_9name"/>
     </changeSet>
+
+    <changeSet id="10" author="surech">
+        <addColumn tableName="mitarbeiter">
+            <column name="OE_NAME" type="varchar(100)" remarks="Name der Organisationseinheit">
+                <constraints nullable="false" unique="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
