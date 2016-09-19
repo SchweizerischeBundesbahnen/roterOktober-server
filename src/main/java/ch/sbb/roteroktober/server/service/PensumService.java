@@ -37,7 +37,7 @@ public class PensumService {
         PublicIdEntity publicId = publicIdService.createNewPublicId(PUBLIC_ID_PREFIX, PUBLIC_ID_LENGTH);
 
         // Alles in die Entität packen
-        entity.setPublicId(einsatzId);
+        entity.setPublicId(publicId.getPublicId());
         entity.setEinsatz(einsatz);
 
         // Speichern

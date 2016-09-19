@@ -35,8 +35,23 @@ public class PensumIntegrationTest extends IntegrationTestBase {
         when().get("/mitarbeiter/" + uid + "/einsatz/" + einsatzId + "/pensum").then().body("size()", is(1));
         when().get("/pensum/" + pensumId).then().statusCode(200).body("publicId", is(pensumId));
 
+        // Und wir fügen nochmals einen Einsatz dazu
+        String pensum2Id = given().
+                body("{\"pensum\":60,\"anfang\":\"2015-02-01T00:00:00.000Z\", \"ende\":\"2015-06-01T00:00:00.000Z\"}").
+                contentType(ContentType.JSON).
+                post("/mitarbeiter/" + uid + "/einsatz/" + einsatzId + "/pensum").
+                then().
+                statusCode(200).
+                body("pensum", is(60)).
+                extract().path("publicId");
+
+        // Jetzt sollten zwei Pensen da sein
+        when().get("/mitarbeiter/" + uid + "/einsatz/" + einsatzId + "/pensum").then().body("size()", is(2));
+        when().get("/pensum/" + pensum2Id).then().statusCode(200).body("publicId", is(pensum2Id));
+
         // Pensum wieder löschen
         when().delete("/pensum/" + pensumId).then().statusCode(200);
+        when().delete("/pensum/" + pensum2Id).then().statusCode(200);
 
         // Jetzt sollte wieder alles weg sein
         when().get("/mitarbeiter/" + uid + "/einsatz/" + einsatzId + "/pensum").then().body("size()", is(0));
