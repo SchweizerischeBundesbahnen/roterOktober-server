@@ -2,6 +2,7 @@ package ch.sbb.roteroktober.server.rest.controller;
 
 import ch.sbb.roteroktober.server.model.PensumEntity;
 import ch.sbb.roteroktober.server.repo.PensumRepository;
+import ch.sbb.roteroktober.server.rest.exceptions.BadRequestException;
 import ch.sbb.roteroktober.server.rest.exceptions.NotFoundException;
 import ch.sbb.roteroktober.server.rest.mapper.PensumMapper;
 import ch.sbb.roteroktober.server.rest.model.PensumResource;
@@ -59,6 +60,24 @@ public class PensumRestController {
         PensumEntity savedPensum = pensumService.createPensum(newPensum, einsatzId);
 
         // Wieder eine Ressource erstellen und zurückgeben
+        return pensumMapper.fromEntity(savedPensum);
+    }
+
+    @RequestMapping(path = "/pensum/{pensumId}", method = RequestMethod.PUT)
+    public PensumResource update(@PathVariable("pensumId") String pensumId, @Validated @RequestBody PensumResource resource){
+        // Pensum mit dem gegebenen Schlüssel laden
+        PensumEntity existingPensum = pensumRepository.findByPublicId(pensumId);
+        if (existingPensum == null) {
+            throw new BadRequestException("Kein Pensum mit der ID " + pensumId + "vorhanden. Speichern nicht möglich");
+        }
+
+        // Werte mappen
+        resource.setPublicId(pensumId);
+        existingPensum = pensumMapper.toEntity(resource, existingPensum);
+
+        // Wieder speichern
+        PensumEntity savedPensum = pensumRepository.save(existingPensum);
+
         return pensumMapper.fromEntity(savedPensum);
     }
 

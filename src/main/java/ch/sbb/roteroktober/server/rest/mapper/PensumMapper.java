@@ -27,13 +27,18 @@ public class PensumMapper {
         return result;
     }
 
+    public PensumEntity toEntity(PensumResource source, PensumEntity target) {
+        target.setPublicId(source.getPublicId());
+        target.setPensum(source.getPensum());
+        target.setAnfang(source.getAnfang());
+        target.setEnde(source.getEnde());
+
+        return target;
+    }
+
+
     public PensumEntity toEntity(PensumResource resource) {
         PensumEntity result = new PensumEntity();
-        result.setPublicId(resource.getPublicId());
-        result.setPensum(resource.getPensum());
-        result.setAnfang(resource.getAnfang());
-        result.setEnde(resource.getEnde());
-
-        return result;
+        return toEntity(resource, result);
     }
 }

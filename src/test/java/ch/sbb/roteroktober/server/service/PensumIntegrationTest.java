@@ -35,7 +35,7 @@ public class PensumIntegrationTest extends IntegrationTestBase {
         when().get("/mitarbeiter/" + uid + "/einsatz/" + einsatzId + "/pensum").then().body("size()", is(1));
         when().get("/pensum/" + pensumId).then().statusCode(200).body("publicId", is(pensumId));
 
-        // Und wir fügen nochmals einen Einsatz dazu
+        // Und wir fügen nochmals ein Pensum dazu
         String pensum2Id = given().
                 body("{\"pensum\":60,\"anfang\":\"2015-02-01T00:00:00.000Z\", \"ende\":\"2015-06-01T00:00:00.000Z\"}").
                 contentType(ContentType.JSON).
@@ -43,11 +43,30 @@ public class PensumIntegrationTest extends IntegrationTestBase {
                 then().
                 statusCode(200).
                 body("pensum", is(60)).
+                body("ende", is("2015-06-01T00:00:00.000Z")).
                 extract().path("publicId");
 
         // Jetzt sollten zwei Pensen da sein
         when().get("/mitarbeiter/" + uid + "/einsatz/" + einsatzId + "/pensum").then().body("size()", is(2));
         when().get("/pensum/" + pensum2Id).then().statusCode(200).body("publicId", is(pensum2Id));
+
+        // Pensum aktualisieren
+        given().
+                body("{\"pensum\":70,\"anfang\":\"2015-02-01T00:00:00.000Z\", \"ende\":\"2015-08-12T00:00:00.000Z\"}").
+                contentType(ContentType.JSON).
+                put("/pensum/" + pensum2Id).
+                then().
+                statusCode(200).
+                body("pensum", is(70)).
+                body("ende", is("2015-08-12T00:00:00.000Z"));
+
+        // Pensum nochmals suchen
+        when().get("/pensum/" + pensum2Id)
+                .then()
+                .statusCode(200)
+                .body("publicId", is(pensum2Id))
+                .body("pensum", is(70))
+                .body("ende", is("2015-08-12T00:00:00.000Z"));
 
         // Pensum wieder löschen
         when().delete("/pensum/" + pensumId).then().statusCode(200);
