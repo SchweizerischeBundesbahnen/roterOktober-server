@@ -1,5 +1,11 @@
 package ch.sbb.roteroktober.server.rest.mapper;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 import ch.sbb.roteroktober.server.model.EinsatzEntity;
 import ch.sbb.roteroktober.server.rest.controller.EinsatzRestController;
 import ch.sbb.roteroktober.server.rest.controller.MitarbeiterRestController;
@@ -10,14 +16,8 @@ import ch.sbb.roteroktober.server.rest.model.PensumResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
 /**
- * Mapper zwischen der JPA-Entität und der REST-Ressource
+ * Mapper zwischen der JPA-Entität und der REST-Ressource.
  */
 @Component
 public class EinsatzMapper {

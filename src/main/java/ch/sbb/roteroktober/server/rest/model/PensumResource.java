@@ -1,21 +1,22 @@
 package ch.sbb.roteroktober.server.rest.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import org.springframework.hateoas.ResourceSupport;
+import java.util.Date;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.hateoas.ResourceSupport;
 
 /**
- * Beschreibt die REST-Ressource für das Pensum eines Mitabeiters in einem Projekt
+ * Beschreibt die REST-Ressource für das Pensum eines Mitabeiters in einem Projekt.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PensumResource extends ResourceSupport {
 
-    /** Öffentlicher Schlüssel für diesen Einsatz*/
+    /** Öffentlicher Schlüssel für diesen Einsatz */
     private String publicId;
 
     @Min(0)

@@ -1,6 +1,12 @@
 package ch.sbb.roteroktober.server.repo;
 
-import ch.sbb.roteroktober.server.model.*;
+import java.util.List;
+
+import ch.sbb.roteroktober.server.model.MitarbeiterEntity;
+import ch.sbb.roteroktober.server.model.QEinsatzEntity;
+import ch.sbb.roteroktober.server.model.QMitarbeiterEntity;
+import ch.sbb.roteroktober.server.model.QPensumEntity;
+import ch.sbb.roteroktober.server.model.QProjektEntity;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPQLQuery;
@@ -8,10 +14,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
- * Erweiterte DB-Zugriffe auf den Mitarbeiter, welche mit einem normalen Spring Data Repo nicht abgebildet werden können
+ * Erweiterte DB-Zugriffe auf den Mitarbeiter, welche mit einem normalen Spring Data Repo nicht abgebildet werden können.
  */
 @Repository
 public class MitarbeiterRepositoryCustom extends QueryDslRepositorySupport {
@@ -41,9 +45,7 @@ public class MitarbeiterRepositoryCustom extends QueryDslRepositorySupport {
 
         // Projekt überprüfen
         if (StringUtils.isNotBlank(projektId)) {
-            root.innerJoin(mitarbeiter.einsaetze, einsatz)
-                    .innerJoin(einsatz.projekt, projekt)
-                    .innerJoin(einsatz.pensen, pensum); // Wir wollen nur Projekte, wo es effektiv Einsätze gibt
+            root.innerJoin(mitarbeiter.einsaetze, einsatz).innerJoin(einsatz.projekt, projekt).innerJoin(einsatz.pensen, pensum); // Wir wollen nur Projekte, wo es effektiv Einsätze gibt
 
             // Nur nicht gelöschte Einträge finden
             builder.and(einsatz.deleted.isFalse());

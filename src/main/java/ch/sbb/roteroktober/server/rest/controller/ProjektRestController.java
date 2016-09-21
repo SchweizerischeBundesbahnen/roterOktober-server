@@ -1,5 +1,9 @@
 package ch.sbb.roteroktober.server.rest.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import ch.sbb.roteroktober.server.model.ProjektEntity;
 import ch.sbb.roteroktober.server.repo.ProjektRepository;
 import ch.sbb.roteroktober.server.rest.exceptions.NotFoundException;
@@ -7,14 +11,14 @@ import ch.sbb.roteroktober.server.rest.mapper.ProjektMapper;
 import ch.sbb.roteroktober.server.rest.model.ProjektResource;
 import ch.sbb.roteroktober.server.service.ProjektService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * REST-Schnittstelle für die Projekte
+ * REST-Schnittstelle für die Projekte.
  */
 @RestController
 @RequestMapping(path = "/projekt")
@@ -73,6 +77,7 @@ public class ProjektRestController {
 
         return result.stream().map(projektMapper::fromEntity).collect(Collectors.toList());
     }
+
     @RequestMapping(path = "/{publicId}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("publicId") String publicId) {
         projektRepository.setDeleteFlag(publicId);

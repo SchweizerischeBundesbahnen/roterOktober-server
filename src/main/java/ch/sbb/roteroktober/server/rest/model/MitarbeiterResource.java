@@ -1,11 +1,11 @@
 package ch.sbb.roteroktober.server.rest.model;
 
-import org.springframework.hateoas.ResourceSupport;
-
 import javax.validation.constraints.Size;
 
+import org.springframework.hateoas.ResourceSupport;
+
 /**
- * Beschreibt die REST-Ressource für den Mitarbeiter
+ * Beschreibt die REST-Ressource für den Mitarbeiter.
  */
 public class MitarbeiterResource extends ResourceSupport {
     @Size(min = 1, max = 100)

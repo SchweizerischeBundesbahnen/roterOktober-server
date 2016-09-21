@@ -3,17 +3,14 @@ package ch.sbb.roteroktober.server.rest.model;
 import ch.sbb.roteroktober.server.model.RolleEnum;
 import ch.sbb.roteroktober.server.model.SenioritaetEnum;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.springframework.hateoas.ResourceSupport;
-
-import java.util.List;
 
 /**
- * Beschreibt die REST-Ressource für einen Einsatz eines Mitarbeiter in einem Projekt
+ * Beschreibt die REST-Ressource für einen Einsatz eines Mitarbeiter in einem Projekt.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EinsatzResource extends HalResource {
 
-    /** Öffentlicher Schlüssel für diesen Einsatz*/
+    /** Öffentlicher Schlüssel für diesen Einsatz */
     private String publicId;
 
     private RolleEnum rolle;

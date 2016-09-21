@@ -1,8 +1,9 @@
 package ch.sbb.roteroktober.server.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import java.util.Date;
 
 /**
  * Basisklasse für eine Enität, welche gelöscht werden kann.

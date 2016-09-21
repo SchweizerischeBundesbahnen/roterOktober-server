@@ -1,16 +1,16 @@
 package ch.sbb.roteroktober.server.rest.mapper;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import ch.sbb.roteroktober.server.model.PensumEntity;
 import ch.sbb.roteroktober.server.rest.controller.EinsatzRestController;
 import ch.sbb.roteroktober.server.rest.controller.PensumRestController;
 import ch.sbb.roteroktober.server.rest.model.PensumResource;
 import org.springframework.stereotype.Component;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
 /**
- * Mapper zwischen der JPA-Entität und der REST-Ressource
+ * Mapper zwischen der JPA-Entität und der REST-Ressource.
  */
 @Component
 public class PensumMapper {

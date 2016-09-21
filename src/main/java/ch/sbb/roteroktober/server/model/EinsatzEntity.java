@@ -1,11 +1,18 @@
 package ch.sbb.roteroktober.server.model;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 /**
- * Repräsentiert einen Einsatz eines Mitarbeiters in einem Projekt
+ * Repräsentiert einen Einsatz eines Mitarbeiters in einem Projekt.
  */
 @Entity
 @Table(name = "einsatz")
@@ -61,7 +68,7 @@ public class EinsatzEntity extends PublicIdBaseEntity {
     }
 
     public List<PensumEntity> getPensen() {
-        if(this.pensen == null){
+        if (this.pensen == null) {
             this.pensen = new ArrayList<>();
         }
         return this.pensen;

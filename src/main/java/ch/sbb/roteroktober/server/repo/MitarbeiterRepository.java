@@ -1,5 +1,7 @@
 package ch.sbb.roteroktober.server.repo;
 
+import java.util.List;
+
 import ch.sbb.roteroktober.server.model.MitarbeiterEntity;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -8,10 +10,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 /**
- * Datenbank-Zugriff auf den Mitarbeiter
+ * Datenbank-Zugriff auf den Mitarbeiter.
  */
 public interface MitarbeiterRepository extends CrudRepository<MitarbeiterEntity, Long>, QueryDslPredicateExecutor<MitarbeiterEntity> {
 

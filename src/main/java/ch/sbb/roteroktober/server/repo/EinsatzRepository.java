@@ -1,17 +1,16 @@
 package ch.sbb.roteroktober.server.repo;
 
+import java.util.List;
+
 import ch.sbb.roteroktober.server.model.EinsatzEntity;
-import ch.sbb.roteroktober.server.model.ProjektEntity;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 /**
- * Datenbank-Zugriff auf die Einsätze
+ * Datenbank-Zugriff auf die Einsätze.
  */
 public interface EinsatzRepository extends CrudRepository<EinsatzEntity, Long> {
 
