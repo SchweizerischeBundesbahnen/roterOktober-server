@@ -2,6 +2,7 @@ package ch.sbb.roteroktober.server.rest.controller;
 
 import ch.sbb.roteroktober.server.model.EinsatzEntity;
 import ch.sbb.roteroktober.server.repo.EinsatzRepository;
+import ch.sbb.roteroktober.server.rest.exceptions.BadRequestException;
 import ch.sbb.roteroktober.server.rest.exceptions.NotFoundException;
 import ch.sbb.roteroktober.server.rest.mapper.EinsatzMapper;
 import ch.sbb.roteroktober.server.rest.model.EinsatzResource;
@@ -59,6 +60,24 @@ public class EinsatzRestController {
         EinsatzEntity savedEinsatz = einsatzService.createEinsatz(newEinsatz, uid, resource.getProjektId());
 
         // Wieder eine Ressource erstellen und zurückgeben
+        return einsatzMapper.fromEntity(savedEinsatz);
+    }
+
+    @RequestMapping(path = "/einsatz/{einsatzId}", method = RequestMethod.PUT)
+    public EinsatzResource update(@PathVariable("einsatzId") String einsatzId, @Validated @RequestBody EinsatzResource resource){
+        // Entität mit dem gegebenen Schlüssel laden
+        EinsatzEntity existingEinsatz = einsatzRepository.findByPublicId(einsatzId);
+        if (existingEinsatz == null) {
+            throw new BadRequestException("Kein Einsatz mit der ID " + einsatzId + " vorhanden. Speichern nicht möglich");
+        }
+
+        // Werte mappen
+        resource.setPublicId(einsatzId);
+        existingEinsatz = einsatzMapper.toEntity(resource, existingEinsatz);
+
+        // Wieder speichern
+        EinsatzEntity savedEinsatz = einsatzRepository.save(existingEinsatz);
+
         return einsatzMapper.fromEntity(savedEinsatz);
     }
 

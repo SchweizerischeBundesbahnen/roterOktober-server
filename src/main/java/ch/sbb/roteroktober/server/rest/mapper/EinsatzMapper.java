@@ -1,16 +1,13 @@
 package ch.sbb.roteroktober.server.rest.mapper;
 
 import ch.sbb.roteroktober.server.model.EinsatzEntity;
-import ch.sbb.roteroktober.server.repo.PensumRepository;
 import ch.sbb.roteroktober.server.rest.controller.EinsatzRestController;
 import ch.sbb.roteroktober.server.rest.controller.MitarbeiterRestController;
 import ch.sbb.roteroktober.server.rest.controller.PensumRestController;
 import ch.sbb.roteroktober.server.rest.controller.ProjektRestController;
 import ch.sbb.roteroktober.server.rest.model.EinsatzResource;
 import ch.sbb.roteroktober.server.rest.model.PensumResource;
-import ch.sbb.roteroktober.server.rest.model.ProjektResource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -49,11 +46,15 @@ public class EinsatzMapper {
         return result;
     }
 
+    public EinsatzEntity toEntity(EinsatzResource source, EinsatzEntity target) {
+        target.setPublicId(source.getPublicId());
+        target.setSenioritaet(source.getSenioritaet());
+        target.setRolle(source.getRolle());
+        return target;
+    }
+
     public EinsatzEntity toEntity(EinsatzResource resource) {
         EinsatzEntity result = new EinsatzEntity();
-        result.setPublicId(resource.getPublicId());
-        result.setSenioritaet(resource.getSenioritaet());
-        result.setRolle(resource.getRolle());
-        return result;
+        return toEntity(resource, result);
     }
 }
