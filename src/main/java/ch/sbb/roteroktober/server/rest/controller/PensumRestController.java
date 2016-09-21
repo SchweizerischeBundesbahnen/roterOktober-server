@@ -1,5 +1,8 @@
 package ch.sbb.roteroktober.server.rest.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import ch.sbb.roteroktober.server.model.PensumEntity;
 import ch.sbb.roteroktober.server.repo.PensumRepository;
 import ch.sbb.roteroktober.server.rest.exceptions.BadRequestException;
@@ -9,13 +12,14 @@ import ch.sbb.roteroktober.server.rest.model.PensumResource;
 import ch.sbb.roteroktober.server.service.PensumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * REST-Schnittestelle für die Pensen
+ * REST-Schnittestelle für die Pensen.
  */
 @RestController
 public class PensumRestController {
@@ -64,7 +68,7 @@ public class PensumRestController {
     }
 
     @RequestMapping(path = "/pensum/{pensumId}", method = RequestMethod.PUT)
-    public PensumResource update(@PathVariable("pensumId") String pensumId, @Validated @RequestBody PensumResource resource){
+    public PensumResource update(@PathVariable("pensumId") String pensumId, @Validated @RequestBody PensumResource resource) {
         // Pensum mit dem gegebenen Schlüssel laden
         PensumEntity existingPensum = pensumRepository.findByPublicId(pensumId);
         if (existingPensum == null) {

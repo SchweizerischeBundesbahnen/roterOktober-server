@@ -1,15 +1,15 @@
 package ch.sbb.roteroktober.server.rest.mapper;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import ch.sbb.roteroktober.server.model.MitarbeiterEntity;
 import ch.sbb.roteroktober.server.rest.controller.MitarbeiterRestController;
 import ch.sbb.roteroktober.server.rest.model.MitarbeiterResource;
 import org.springframework.stereotype.Component;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
 /**
- * Mapper zwischen der JPA-Entität und der REST-Ressource
+ * Mapper zwischen der JPA-Entität und der REST-Ressource.
  */
 @Component
 public class MitarbeiterMapper {

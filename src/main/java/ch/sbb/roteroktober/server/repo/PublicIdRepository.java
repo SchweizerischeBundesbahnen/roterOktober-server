@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 /**
- * Datenbank-Zugriff auf die öffentlichen Schlüssel
+ * Datenbank-Zugriff auf die öffentlichen Schlüssel.
  */
 public interface PublicIdRepository extends CrudRepository<PublicIdEntity, Long> {
 

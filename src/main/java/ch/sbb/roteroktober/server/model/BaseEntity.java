@@ -1,9 +1,13 @@
 package ch.sbb.roteroktober.server.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 /**
- * Basisklasse für alle Entitäten
+ * Basisklasse für alle Entitäten.
  */
 @MappedSuperclass
 public abstract class BaseEntity {

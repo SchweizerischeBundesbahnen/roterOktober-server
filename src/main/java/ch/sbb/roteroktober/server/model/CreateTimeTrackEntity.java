@@ -1,12 +1,13 @@
 package ch.sbb.roteroktober.server.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
-import java.util.Date;
 
 /**
- * Basisklasse für eine Entität, deren Erstelldatum automatisch gesetzt wird
+ * Basisklasse für eine Entität, deren Erstelldatum automatisch gesetzt wird.
  */
 @MappedSuperclass
 public abstract class CreateTimeTrackEntity extends BaseEntity {

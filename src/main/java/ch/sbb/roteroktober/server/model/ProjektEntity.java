@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Repräsentiert ein Projekt
+ * Repräsentiert ein Projekt.
  */
 @Entity
 @Table(name = "projekt")

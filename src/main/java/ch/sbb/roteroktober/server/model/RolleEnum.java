@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Repräsentiert die Rolle eines Mitarbeiters
+ * Repräsentiert die Rolle eines Mitarbeiters.
  */
 public enum RolleEnum {
     ApplicationEngineer("ae"),

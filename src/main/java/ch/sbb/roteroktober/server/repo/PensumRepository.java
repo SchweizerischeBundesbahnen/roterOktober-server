@@ -1,5 +1,7 @@
 package ch.sbb.roteroktober.server.repo;
 
+import java.util.List;
+
 import ch.sbb.roteroktober.server.model.PensumEntity;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -7,10 +9,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 /**
- * Datenbank-Zugriffe auf die Pensen
+ * Datenbank-Zugriffe auf die Pensen.
  */
 public interface PensumRepository extends CrudRepository<PensumEntity, Long> {
 

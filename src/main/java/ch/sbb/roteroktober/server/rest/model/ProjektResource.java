@@ -1,12 +1,12 @@
 package ch.sbb.roteroktober.server.rest.model;
 
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.hateoas.ResourceSupport;
 
-import java.util.Date;
-
 /**
- * Beschreibt die REST-Ressource eines Projektes
+ * Beschreibt die REST-Ressource eines Projektes.
  */
 public class ProjektResource extends ResourceSupport {
 

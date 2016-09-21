@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Repräsentiert einen öffentlichen Schlüssel
+ * Repräsentiert einen öffentlichen Schlüssel.
  */
 @Entity
 @Table(name = "publicids")

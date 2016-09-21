@@ -1,5 +1,8 @@
 package ch.sbb.roteroktober.server.rest.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import ch.sbb.roteroktober.server.model.EinsatzEntity;
 import ch.sbb.roteroktober.server.repo.EinsatzRepository;
 import ch.sbb.roteroktober.server.rest.exceptions.BadRequestException;
@@ -9,13 +12,14 @@ import ch.sbb.roteroktober.server.rest.model.EinsatzResource;
 import ch.sbb.roteroktober.server.service.EinsatzService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * REST-Schnittstelle für die Einsätze
+ * REST-Schnittstelle für die Einsätze.
  */
 @RestController
 public class EinsatzRestController {
@@ -64,7 +68,7 @@ public class EinsatzRestController {
     }
 
     @RequestMapping(path = "/einsatz/{einsatzId}", method = RequestMethod.PUT)
-    public EinsatzResource update(@PathVariable("einsatzId") String einsatzId, @Validated @RequestBody EinsatzResource resource){
+    public EinsatzResource update(@PathVariable("einsatzId") String einsatzId, @Validated @RequestBody EinsatzResource resource) {
         // Entität mit dem gegebenen Schlüssel laden
         EinsatzEntity existingEinsatz = einsatzRepository.findByPublicId(einsatzId);
         if (existingEinsatz == null) {

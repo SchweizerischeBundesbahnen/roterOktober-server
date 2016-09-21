@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Repräsentiert die Seniorität eines Mitarbeiters
+ * Repräsentiert die Seniorität eines Mitarbeiters.
  */
 public enum SenioritaetEnum {
 

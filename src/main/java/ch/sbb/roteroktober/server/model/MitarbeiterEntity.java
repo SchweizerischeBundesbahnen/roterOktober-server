@@ -1,12 +1,15 @@
 package ch.sbb.roteroktober.server.model;
 
-import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 /**
- * Repräsentiert einen Mitarbeiter
+ * Repräsentiert einen Mitarbeiter.
  */
 @Entity
 @Table(name = "mitarbeiter")
@@ -60,7 +63,7 @@ public class MitarbeiterEntity extends DeletableEntity {
     }
 
     public List<EinsatzEntity> getEinsaetze() {
-        if(einsaetze == null){
+        if (einsaetze == null) {
             einsaetze = new ArrayList<>();
         }
         return einsaetze;

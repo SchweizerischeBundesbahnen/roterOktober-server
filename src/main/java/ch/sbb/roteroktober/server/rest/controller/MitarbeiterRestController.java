@@ -1,5 +1,9 @@
 package ch.sbb.roteroktober.server.rest.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import ch.sbb.roteroktober.server.model.MitarbeiterEntity;
 import ch.sbb.roteroktober.server.repo.MitarbeiterRepository;
 import ch.sbb.roteroktober.server.repo.MitarbeiterRepositoryCustom;
@@ -8,14 +12,15 @@ import ch.sbb.roteroktober.server.rest.mapper.MitarbeiterMapper;
 import ch.sbb.roteroktober.server.rest.model.MitarbeiterResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * REST-Schnittstelle für den Mitarbeiter
+ * REST-Schnittstelle für den Mitarbeiter.
  */
 @RestController
 @RequestMapping(path = "/mitarbeiter")

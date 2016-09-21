@@ -1,7 +1,7 @@
 package ch.sbb.roteroktober.server.rest.model;
 
 /**
- * Wichtige Werte, welche in den REST-Ressourcen verwendet werden
+ * Wichtige Werte, welche in den REST-Ressourcen verwendet werden.
  */
 public final class ResourceConstants {
 
