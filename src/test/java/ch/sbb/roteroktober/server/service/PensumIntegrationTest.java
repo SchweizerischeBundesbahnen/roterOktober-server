@@ -1,13 +1,14 @@
 package ch.sbb.roteroktober.server.service;
 
+import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
+import static org.hamcrest.Matchers.is;
+
 import io.restassured.http.ContentType;
 import org.junit.Test;
 
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.is;
-
 /**
- * Integrationtest der Einsätze über die REST-Schnittstelle
+ * Integrationtest der Einsätze über die REST-Schnittstelle.
  */
 public class PensumIntegrationTest extends IntegrationTestBase {
 
@@ -61,12 +62,7 @@ public class PensumIntegrationTest extends IntegrationTestBase {
                 body("ende", is("2015-08-12T00:00:00.000Z"));
 
         // Pensum nochmals suchen
-        when().get("/pensum/" + pensum2Id)
-                .then()
-                .statusCode(200)
-                .body("publicId", is(pensum2Id))
-                .body("pensum", is(70))
-                .body("ende", is("2015-08-12T00:00:00.000Z"));
+        when().get("/pensum/" + pensum2Id).then().statusCode(200).body("publicId", is(pensum2Id)).body("pensum", is(70)).body("ende", is("2015-08-12T00:00:00.000Z"));
 
         // Pensum wieder löschen
         when().delete("/pensum/" + pensumId).then().statusCode(200);

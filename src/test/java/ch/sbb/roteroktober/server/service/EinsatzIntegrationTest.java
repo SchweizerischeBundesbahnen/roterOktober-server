@@ -1,13 +1,14 @@
 package ch.sbb.roteroktober.server.service;
 
+import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
+import static org.hamcrest.Matchers.is;
+
 import io.restassured.http.ContentType;
 import org.junit.Test;
 
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.is;
-
 /**
- * Integrationtest der Einsätze über die REST-Schnittstelle
+ * Integrationtest der Einsätze über die REST-Schnittstelle.
  */
 public class EinsatzIntegrationTest extends IntegrationTestBase {
 

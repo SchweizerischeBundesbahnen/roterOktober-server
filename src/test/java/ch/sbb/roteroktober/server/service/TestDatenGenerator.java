@@ -1,12 +1,12 @@
 package ch.sbb.roteroktober.server.service;
 
-import io.restassured.http.ContentType;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
+import io.restassured.http.ContentType;
+
 /**
- * Generiert Testdaten
+ * Generiert Testdaten.
  */
 public class TestDatenGenerator {
 
@@ -51,7 +51,7 @@ public class TestDatenGenerator {
         return publicId;
     }
 
-    public static String createPensum(String pensum, String uid, String einsatzId){
+    public static String createPensum(String pensum, String uid, String einsatzId) {
         String jsonTemplate = "{\"pensum\":%s,\"anfang\":\"2016-02-01T00:00:00.000Z\"}";
         String json = String.format(jsonTemplate, pensum);
 
