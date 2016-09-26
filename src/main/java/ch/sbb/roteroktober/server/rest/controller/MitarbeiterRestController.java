@@ -4,9 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import ch.sbb.roteroktober.server.model.EinsatzEntity;
 import ch.sbb.roteroktober.server.model.MitarbeiterEntity;
+import ch.sbb.roteroktober.server.model.PensumEntity;
+import ch.sbb.roteroktober.server.repo.EinsatzRepository;
 import ch.sbb.roteroktober.server.repo.MitarbeiterRepository;
 import ch.sbb.roteroktober.server.repo.MitarbeiterRepositoryCustom;
+import ch.sbb.roteroktober.server.repo.PensumRepository;
 import ch.sbb.roteroktober.server.rest.exceptions.NotFoundException;
 import ch.sbb.roteroktober.server.rest.mapper.MitarbeiterMapper;
 import ch.sbb.roteroktober.server.rest.model.MitarbeiterResource;
@@ -34,6 +38,12 @@ public class MitarbeiterRestController {
 
     @Autowired
     private MitarbeiterMapper mitarbeiterMapper;
+
+    @Autowired
+    private EinsatzRepository einsatzRepository;
+
+    @Autowired
+    private PensumRepository pensumRepository;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<MitarbeiterResource> getAll() {
@@ -71,6 +81,20 @@ public class MitarbeiterRestController {
 
     @RequestMapping(path = "/{uid}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("uid") String uid) {
+        // markiere alle Einsätze des Mitarbeiters zum Löschen
+        final List<EinsatzEntity> einsatzEntities = einsatzRepository.findByUID(uid);
+        for (EinsatzEntity einsatzEntity : einsatzEntities) {
+            final String einsatzPublicId = einsatzEntity.getPublicId();
+            einsatzRepository.setDeleteFlag(einsatzPublicId);
+
+            // markiere alle Pensen des Mitarbeiters zum Löschen, sofern Einsätze vorhanden sind
+            final List<PensumEntity> pensumEntities = pensumRepository.findByMitarbeiterAndEinsatz(uid, einsatzPublicId);
+            for (PensumEntity pensumEntity : pensumEntities) {
+                pensumRepository.setDeleteFlag(pensumEntity.getPublicId());
+            }
+        }
+
+        // zuletzt markiere den Mitarbeiter zum Löschen
         mitarbeiterRepository.setDeleteFlag(uid);
     }
 

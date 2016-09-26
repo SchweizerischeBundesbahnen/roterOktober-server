@@ -1,21 +1,24 @@
 package ch.sbb.roteroktober.server.service;
 
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+
 import ch.sbb.roteroktober.server.exceptions.UniqueKeyGenerationFailedException;
 import ch.sbb.roteroktober.server.model.PublicIdEntity;
 import ch.sbb.roteroktober.server.repo.PublicIdRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-
 /**
- * Unit-Test für die Klasse {@link PublicIdService}
+ * Unit-Test für die Klasse {@link PublicIdService}.
  */
 @RunWith(MockitoJUnitRunner.class)
 public class PublicIdServiceTest {

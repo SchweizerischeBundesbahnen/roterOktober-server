@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- * Basisklasse für alle Integrationtests über die REST-Schnittstelle
+ * Basisklasse für alle Integrationtests über die REST-Schnittstelle.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
