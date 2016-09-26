@@ -1,27 +1,21 @@
 package ch.sbb.roteroktober.server.service;
 
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.context.embedded.LocalServerPort;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import static ch.sbb.roteroktober.server.service.TestDatenGenerator.*;
+import static ch.sbb.roteroktober.server.service.TestDatenGenerator.createEinsatz;
+import static ch.sbb.roteroktober.server.service.TestDatenGenerator.createMitarbeiter;
+import static ch.sbb.roteroktober.server.service.TestDatenGenerator.createPensum;
+import static ch.sbb.roteroktober.server.service.TestDatenGenerator.createProjekt;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.is;
+
+import io.restassured.http.ContentType;
+import org.junit.Test;
 
 /**
- * Integrationtest des Mitarbeiters über die REST-Schnittstelle
+ * Integrationtest des Mitarbeiters über die REST-Schnittstelle.
  */
 public class MitarbeiterIntegrationTest extends IntegrationTestBase {
-
-
 
     @Test
     public void testCreateDelete() throws Exception {
@@ -60,6 +54,38 @@ public class MitarbeiterIntegrationTest extends IntegrationTestBase {
     }
 
     @Test
+    public void testDeleteWithEnsatzUndPensen() {
+        // Einige Mitarbeite erfassen
+        createMitarbeiter("Muster", "Hans", "u123456", "IT-SWE-CD3-JV6");
+        createMitarbeiter("Müller", "Peter", "u999888", "IT-SWE-CD3-JV3");
+        createMitarbeiter("Meier", "Andreas", "u111222", "IT-SWE-TF-TF1");
+
+        // Projekte erstellen
+        String roterOktoberId = createProjekt("Roter Oktober", "IT-SWE");
+        String webshopId = createProjekt("Webshop", "IT-SCP");
+
+        // Einsätze erstellen
+        String einsatzROMuster = createEinsatz("sa", "prof", "u123456", roterOktoberId);
+        String einsatzWSMuster = createEinsatz("sa", "prof", "u123456", webshopId);
+        String einsatzWSMueller = createEinsatz("ae", "senior", "u999888", webshopId);
+
+        // Pensen hinzufügen
+        String pensumROMuster = createPensum("80", "u123456", einsatzROMuster);
+        String pensumWSMuster = createPensum("80", "u123456", einsatzWSMuster);
+        createPensum("80", "u999888", einsatzWSMueller);
+
+        // Mitarbeiter wieder löschen
+        when().delete("/mitarbeiter/u123456").thenReturn();
+
+        // Mitarbeiter hat nun keine Einsätze und Pensen mehr
+        when().get("/mitarbeiter").then().body("size()", is(2)).statusCode(200);
+        when().get("/mitarbeiter/u123456").then().statusCode(404);
+        when().get("/mitarbeiter/u123456/einsatz/").then().body("size()", is(0)).statusCode(200);
+        when().get("/mitarbeiter/u123456/einsatz/" + pensumROMuster + "/pensum").then().body("size()", is(0)).statusCode(200);
+        when().get("/mitarbeiter/u123456/einsatz/" + pensumWSMuster + "/pensum").then().body("size()", is(0)).statusCode(200);
+    }
+
+    @Test
     public void testSearch() throws Exception {
         // Einige Mitarbeite erfassen
         createMitarbeiter("Muster", "Hans", "u123456", "IT-SWE-CD3-JV6");
@@ -69,7 +95,6 @@ public class MitarbeiterIntegrationTest extends IntegrationTestBase {
         // Projekte erstellen
         String roterOktoberId = createProjekt("Roter Oktober", "IT-SWE");
         String webshopId = createProjekt("Webshop", "IT-SCP");
-        String automatId = createProjekt("Automat", "IT-SCP");
 
         // Einsätze erstellen
         String einsatzROMuster = createEinsatz("sa", "prof", "u123456", roterOktoberId);
