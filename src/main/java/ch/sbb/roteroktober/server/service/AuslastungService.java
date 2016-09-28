@@ -4,7 +4,8 @@ import ch.sbb.roteroktober.server.model.PensumEntity;
 import ch.sbb.roteroktober.server.repo.PensumRepository;
 import ch.sbb.roteroktober.server.rest.model.AuslastungResource;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,8 @@ import java.util.*;
  */
 @Component
 public class AuslastungService {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(AuslastungService.class);
 
     @Autowired
     private PensumRepository pensumRepository;
@@ -34,20 +37,21 @@ public class AuslastungService {
         List<AuslastungResource> auslastungRaw = berechneAulastungRaw(pensumEntities, pensumAenderungen);
 
         // Mal alle Auslastungen ausgeben
-        printAuslastungen(auslastungRaw, "Auslastung Raw");
+        logAuslastung(auslastungRaw, "Auslastung Raw");
 
         // Auslastungen bereinigen und glätten.
         List<AuslastungResource> result = glaetteAuslastung(auslastungRaw);
-        printAuslastungen(result, "Resultat");
+        logAuslastung(result, "Resultat");
         return result;
     }
 
-    private void printAuslastungen(List<AuslastungResource> auslastungRaw, String title) {
-        System.out.println();
-        System.out.println(title);
-        System.out.println(StringUtils.repeat("=", title.length()));
-        for (AuslastungResource auslastung : auslastungRaw) {
-            System.out.println(auslastung);
+    private void logAuslastung(List<AuslastungResource> auslastungRaw, String title) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(title);
+            LOGGER.debug(StringUtils.repeat("=", title.length()));
+            for (AuslastungResource auslastung : auslastungRaw) {
+                LOGGER.debug(auslastung.toString());
+            }
         }
     }
 
