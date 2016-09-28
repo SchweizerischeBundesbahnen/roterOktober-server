@@ -22,6 +22,15 @@ public class AuslastungResource {
     @JsonFormat(pattern = ResourceConstants.ISO_8601_DATE_PATTERN)
     private Date ende;
 
+    public AuslastungResource() {
+    }
+
+    public AuslastungResource(int pensum, Date anfang, Date ende) {
+        this.pensum = pensum;
+        this.anfang = anfang;
+        this.ende = ende;
+    }
+
     public int getPensum() {
         return pensum;
     }
@@ -44,5 +53,14 @@ public class AuslastungResource {
 
     public void setEnde(Date ende) {
         this.ende = ende;
+    }
+
+    @Override
+    public String toString() {
+        return "AuslastungResource{" +
+                "pensum=" + pensum +
+                ", anfang=" + anfang +
+                ", ende=" + ende +
+                '}';
     }
 }

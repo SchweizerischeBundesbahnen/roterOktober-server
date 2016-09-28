@@ -41,12 +41,12 @@ public class AuslastungServiceTest {
         // Resultat überprüfen
         Assert.assertNotNull(result);
         Assert.assertEquals(6, result.size());
-        checkAuslastung(result.get(0), 60, cd(2015, 1, 1), cd(2015, 5, 31));
+        checkAuslastung(result.get(0), 60, cd(2015, 1, 1), cd(2015, 6, 1));
         checkAuslastung(result.get(1), 90, cd(2015, 6, 1), cd(2015, 7, 31));
         checkAuslastung(result.get(2), 110, cd(2015, 8, 1), cd(2015, 12, 31));
-        checkAuslastung(result.get(3), 80, cd(2016, 1, 1), cd(2016, 2, 29));
+        checkAuslastung(result.get(3), 80, cd(2015, 12, 31), cd(2016, 3, 1));
         checkAuslastung(result.get(4), 100, cd(2016, 3, 1), cd(2016, 4, 30));
-        checkAuslastung(result.get(5), 80, cd(2016, 5, 1), cd(2016, 10, 31));
+        checkAuslastung(result.get(5), 80, cd(2016, 4, 30), cd(2016, 10, 31));
     }
 
     private void checkAuslastung(AuslastungResource result, int pensum, Date start, Date ende) {
