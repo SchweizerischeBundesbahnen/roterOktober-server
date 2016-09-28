@@ -19,6 +19,8 @@ public class AuslastungService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(AuslastungService.class);
 
+    private final static Date HIGH_DATE = new GregorianCalendar(2999, 12, 31).getTime();
+
     @Autowired
     private PensumRepository pensumRepository;
 
@@ -113,6 +115,11 @@ public class AuslastungService {
                 continue;
             }
 
+            // Wenn möglich das Bis-Datum auf Null setzen
+            if (auslastung.getEnde().equals(HIGH_DATE)) {
+                auslastung.setEnde(null);
+            }
+
             // Wenn beide Elemente das gleiche Pensum haben, fügen wir es zusammen
             if (last.getPensum() == auslastung.getPensum()) {
                 AuslastungResource merged = new AuslastungResource(last.getPensum(), last.getAnfang(), auslastung.getEnde());
@@ -139,7 +146,7 @@ public class AuslastungService {
         int result = 0;
         for (PensumEntity pensum : pensumEntities) {
             if ((pensum.getAnfang().equals(datum) || pensum.getAnfang().before(datum))
-                    && (pensum.getEnde().equals(datum) || pensum.getEnde().after(datum))) {
+                    && (pensum.getEnde() == null || pensum.getEnde().equals(datum) || pensum.getEnde().after(datum))) {
                 result += pensum.getPensum();
             }
         }
@@ -160,7 +167,11 @@ public class AuslastungService {
 
             // Beim Ende-Datum setzten wir die Zeit immer auf Mitternacht, da wir davon ausgehen, dass immer der
             // ganze Tag gemeint ist
-            result.add(setEndOfDay(pensum.getEnde()));
+            if (pensum.getEnde() == null) {
+                result.add(HIGH_DATE);
+            } else {
+                result.add(setEndOfDay(pensum.getEnde()));
+            }
         }
 
         return result;

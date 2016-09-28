@@ -30,7 +30,7 @@ public class AuslastungServiceTest {
         List<PensumEntity> pensen = new ArrayList<>();
         pensen.add(new PensumEntity(60, cd(2015, 1, 1), cd(2015, 7, 31)));
         pensen.add(new PensumEntity(80, cd(2015, 8, 1), cd(2016, 7, 31)));
-        pensen.add(new PensumEntity(80, cd(2016, 8, 1), cd(2016, 10, 31)));
+        pensen.add(new PensumEntity(80, cd(2016, 8, 1), null));
         pensen.add(new PensumEntity(30, cd(2015, 6, 1), cd(2015, 12, 31)));
         pensen.add(new PensumEntity(20, cd(2016, 3, 1), cd(2016, 3, 31)));
         pensen.add(new PensumEntity(20, cd(2016, 4, 1), cd(2016, 4, 30)));
@@ -46,7 +46,7 @@ public class AuslastungServiceTest {
         checkAuslastung(result.get(2), 110, cd(2015, 8, 1), cd(2015, 12, 31));
         checkAuslastung(result.get(3), 80, cd(2015, 12, 31), cd(2016, 3, 1));
         checkAuslastung(result.get(4), 100, cd(2016, 3, 1), cd(2016, 4, 30));
-        checkAuslastung(result.get(5), 80, cd(2016, 4, 30), cd(2016, 10, 31));
+        checkAuslastung(result.get(5), 80, cd(2016, 4, 30), null);
     }
 
     private void checkAuslastung(AuslastungResource result, int pensum, Date start, Date ende) {
@@ -57,9 +57,13 @@ public class AuslastungServiceTest {
         Assert.assertEquals(start.getMonth(), result.getAnfang().getMonth());
         Assert.assertEquals(start.getDate(), result.getAnfang().getDate());
 
-        Assert.assertEquals(ende.getYear(), result.getEnde().getYear());
-        Assert.assertEquals(ende.getMonth(), result.getEnde().getMonth());
-        Assert.assertEquals(ende.getDate(), result.getEnde().getDate());
+        if(ende != null) {
+            Assert.assertEquals(ende.getYear(), result.getEnde().getYear());
+            Assert.assertEquals(ende.getMonth(), result.getEnde().getMonth());
+            Assert.assertEquals(ende.getDate(), result.getEnde().getDate());
+        } else {
+            Assert.assertNull(result.getEnde());
+        }
     }
 
     private Date cd(int year, int month, int day) {
