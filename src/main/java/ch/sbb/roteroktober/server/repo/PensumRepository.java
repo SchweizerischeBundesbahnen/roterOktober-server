@@ -20,10 +20,10 @@ public interface PensumRepository extends CrudRepository<PensumEntity, Long> {
     @Query("SELECT p FROM PensumEntity p WHERE p.publicId = :publicId AND p.deleted = false")
     PensumEntity findByPublicId(@Param("publicId") String publicId);
 
-    @Query("SELECT p FROM PensumEntity p JOIN p.einsatz e JOIN e.mitarbeiter m WHERE m.uid = :uid AND e.publicId = :einsatzId AND p.deleted = false")
+    @Query("SELECT p FROM PensumEntity p JOIN p.einsatz e JOIN e.mitarbeiter m WHERE m.uid = :uid AND e.publicId = :einsatzId AND p.deleted = false AND m.deleted = false and e.deleted = false")
     List<PensumEntity> findByMitarbeiterAndEinsatz(@Param("uid") String uid, @Param("einsatzId") String einsatzId);
 
-    @Query("SELECT p FROM PensumEntity p JOIN p.einsatz e JOIN e.mitarbeiter m WHERE m.uid = :uid AND p.deleted = false")
+    @Query("SELECT p FROM PensumEntity p JOIN p.einsatz e JOIN e.mitarbeiter m WHERE m.uid = :uid AND p.deleted = false AND e.deleted = false AND m.deleted = false")
     List<PensumEntity> findByMitarbeiter(@Param("uid") String uid);
 
     @Transactional
