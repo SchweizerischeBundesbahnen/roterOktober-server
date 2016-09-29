@@ -4,6 +4,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import ch.sbb.roteroktober.server.model.MitarbeiterEntity;
+import ch.sbb.roteroktober.server.rest.controller.AuslastungRestController;
+import ch.sbb.roteroktober.server.rest.controller.EinsatzRestController;
 import ch.sbb.roteroktober.server.rest.controller.MitarbeiterRestController;
 import ch.sbb.roteroktober.server.rest.model.MitarbeiterResource;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,8 @@ public class MitarbeiterMapper {
         result.setOeName(entity.getOeName());
 
         result.add(linkTo(methodOn(MitarbeiterRestController.class).getByUid(entity.getUid())).withSelfRel());
+        result.add(linkTo(methodOn(EinsatzRestController.class).findAllByMitarbeiter(entity.getUid())).withRel("einsaetze"));
+        result.add(linkTo(methodOn(AuslastungRestController.class).getAuslastung(entity.getUid())).withRel("auslastung"));
 
         return result;
     }

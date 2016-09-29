@@ -33,6 +33,15 @@ public class PensumEntity extends PublicIdBaseEntity {
     @Column(name = "ende", nullable = true)
     private Date ende;
 
+    public PensumEntity() {
+    }
+
+    public PensumEntity(int pensum, Date anfang, Date ende) {
+        this.pensum = pensum;
+        this.anfang = anfang;
+        this.ende = ende;
+    }
+
     public EinsatzEntity getEinsatz() {
         return einsatz;
     }
