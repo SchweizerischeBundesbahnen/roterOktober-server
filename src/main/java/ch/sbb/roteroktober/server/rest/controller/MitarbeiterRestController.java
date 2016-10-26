@@ -61,7 +61,7 @@ public class MitarbeiterRestController {
 
         // Wenn wir nichts gefunden haben, geben wir einen Fehler zurück
         if (mitarbeiter == null) {
-            throw new NotFoundException("Kein Benutzer mit der UID " + uid + " gefunden");
+            throw new NotFoundException("Kein Mitarbeiter mit der UID " + uid + " gefunden");
         } else {
             return mitarbeiterMapper.fromEntity(mitarbeiter);
         }
