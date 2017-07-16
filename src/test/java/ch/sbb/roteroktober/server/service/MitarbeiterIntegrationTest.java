@@ -1,5 +1,8 @@
 package ch.sbb.roteroktober.server.service;
 
+import io.restassured.http.ContentType;
+import org.junit.Test;
+
 import static ch.sbb.roteroktober.server.service.TestDatenGenerator.createEinsatz;
 import static ch.sbb.roteroktober.server.service.TestDatenGenerator.createMitarbeiter;
 import static ch.sbb.roteroktober.server.service.TestDatenGenerator.createPensum;
@@ -8,9 +11,6 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
-
-import io.restassured.http.ContentType;
-import org.junit.Test;
 
 /**
  * Integrationtest des Mitarbeiters über die REST-Schnittstelle.
@@ -55,7 +55,7 @@ public class MitarbeiterIntegrationTest extends IntegrationTestBase {
 
     @Test
     public void testDeleteWithEnsatzUndPensen() {
-        // Einige Mitarbeite erfassen
+        // Einige Mitarbeiter erfassen
         createMitarbeiter("Muster", "Hans", "u123456", "IT-SWE-CD3-JV6");
         createMitarbeiter("Müller", "Peter", "u999888", "IT-SWE-CD3-JV3");
         createMitarbeiter("Meier", "Andreas", "u111222", "IT-SWE-TF-TF1");
@@ -87,7 +87,7 @@ public class MitarbeiterIntegrationTest extends IntegrationTestBase {
 
     @Test
     public void testSearch() throws Exception {
-        // Einige Mitarbeite erfassen
+        // Einige Mitarbeiter erfassen
         createMitarbeiter("Muster", "Hans", "u123456", "IT-SWE-CD3-JV6");
         createMitarbeiter("Müller", "Peter", "u999888", "IT-SWE-CD3-JV3");
         createMitarbeiter("Meier", "Andreas", "u111222", "IT-SWE-TF-TF1");
@@ -144,5 +144,22 @@ public class MitarbeiterIntegrationTest extends IntegrationTestBase {
                 then().
                 statusCode(200).
                 body("size()", is(2));
+    }
+
+    @Test
+    public void testCreateDuplicateMitarbeiter() {
+        // Einige Mitarbeiter erfassen
+        createMitarbeiter("Muster", "Hans", "u123456", "IT-SWE-CD3-JV6");
+
+        when().get("/mitarbeiter").then().body("size()", is(1)).statusCode(200);
+
+        // Mitarbeiter nochmals erfassen
+        given().
+                body("{\"name\":\"Muster\",\"vorname\":\"Hans\",\"uid\":\"u123456\",\"oeName\":\"IT-SWE-CD3-JV6\"}").
+                contentType(ContentType.JSON).
+                when().
+                post("/mitarbeiter").
+                then().
+                statusCode(409);
     }
 }
