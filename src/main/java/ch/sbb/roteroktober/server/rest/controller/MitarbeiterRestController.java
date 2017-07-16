@@ -11,6 +11,7 @@ import ch.sbb.roteroktober.server.repo.EinsatzRepository;
 import ch.sbb.roteroktober.server.repo.MitarbeiterRepository;
 import ch.sbb.roteroktober.server.repo.MitarbeiterRepositoryCustom;
 import ch.sbb.roteroktober.server.repo.PensumRepository;
+import ch.sbb.roteroktober.server.rest.exceptions.DuplicateEntryException;
 import ch.sbb.roteroktober.server.rest.exceptions.NotFoundException;
 import ch.sbb.roteroktober.server.rest.mapper.MitarbeiterMapper;
 import ch.sbb.roteroktober.server.rest.model.MitarbeiterResource;
@@ -69,6 +70,12 @@ public class MitarbeiterRestController {
 
     @RequestMapping(method = RequestMethod.POST)
     public MitarbeiterResource create(@Validated @RequestBody MitarbeiterResource newMitarbeiter) {
+        // Prüfen ob der Mitarbeiter schon in der DB existiert
+        MitarbeiterEntity mitarbeiter = mitarbeiterRepository.findByUID(newMitarbeiter.getUid());
+        if (mitarbeiter != null) {
+            throw new DuplicateEntryException("Der Mitarbeiter mit der UID " + newMitarbeiter.getUid() + " existiert bereits in der Datenbank");
+        }
+
         // Mappen
         MitarbeiterEntity entity = mitarbeiterMapper.toEntity(newMitarbeiter);
 
